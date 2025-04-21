@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Emjude Coding Tech - our background, expertise, team, and vision for empowering digital innovation.">
+    <meta name="keywords" content="about emjude coding tech, tech solutions, software development, cybersecurity, web apps, mobile apps">
+    <meta name="author" content="Emjude Coding Tech">
+    <title>About Us | Emjude Coding Tech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
+    <!-- AOS Library for Animations (Optional) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section (Reused from Home Page) -->
+    <header>
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo">
+                <a href="/" aria-label="Emjude Coding Tech Home">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Emjude Coding Tech Logo" loading="lazy">
+                </a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">
+                <span class="hamburger">☰</span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="/" aria-label="Home">Home</a></li>
+                <li><a href="/about" aria-label="About" class="active">About</a></li>
+                <li><a href="/services" aria-label="Services">Services</a></li>
+                <li><a href="/portfolio" aria-label="Portfolio">Portfolio</a></li>
+                
+                <li><a href="/contact" aria-label="Contact">Contact</a></li>
+            
+                
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Customized for About Page) -->
+    <section class="hero about-hero" aria-label="About Hero section">
+        <div class="hero-background">
+            <img src="{{ url_for('static', filename='images/about-back.jpg') }}" alt="About Us Background" loading="lazy">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>About Emjude Coding Tech</h1>
+            <p>Empowering businesses with innovative tech solutions since 2023.</p>
+        </div>
+    </section>
+
+    <!-- About Us Section (Detailed Content) -->
+    <section class="about-details" aria-label="About Details section">
+        <!-- Our Story -->
+        <div class="about-section" data-aos="fade-up">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Our Story</h2>
+                    <p>Founded in 2023, Emjude Coding Tech began with a mission to bridge the gap between technology and business success. What started as a small team of passionate developers has grown into a trusted partner for companies worldwide, delivering cutting-edge solutions in software development, cybersecurity, and digital transformation.</p>
+                    <p>Our journey is rooted in a commitment to excellence, innovation, and customer satisfaction, making us a leader in the tech industry.</p>
+                </div>
+                <div class="about-image">
+                    <img src="{{ url_for('static', filename='images/story1.jpg') }}" alt="Our Story Illustration" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Expertise -->
+        <div class="about-section expertise-section" data-aos="fade-up">
+            <div class="about-content reverse">
+                <div class="about-image">
+                    <img src="{{ url_for('static', filename='images/about-us.jpg') }}" alt="Our Expertise Illustration" loading="lazy">
+                </div>
+                <div class="about-text">
+                    <h2 class="section-title">Our Expertise</h2>
+                    <p>With over a decade of experience, our team excels in custom software development, cybersecurity, and web/mobile app creation. We leverage the latest technologies and best practices to deliver secure, scalable, and intelligent solutions tailored to your unique needs.</p>
+                    <p>From startups to enterprises, we’ve empowered businesses across industries to achieve their digital goals.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Team -->
+        <div class="about-section" data-aos="fade-up">
+            <h2 class="section-title">Meet Our Team</h2>
+            <div class="team-grid">
+                <article class="team-member">
+                    <img src="{{ url_for('static', filename='images/team1.jpg') }}" alt="Team Member 1" loading="lazy">
+                    <h3>Nti Gyimah Emmanuel</h3>
+                    <p>Founder, CEO & Developer</p>
+                </article>
+                <article class="team-member">
+                    <img src="{{ url_for('static', filename='images/ama.jpg') }}" alt="Team Member 2" loading="lazy">
+                    <h3>Adinkrah Yeboah Judith</h3>
+                    <p>CEO, Manager & UI/UX Designer</p>
+                </article>
+                
+            </div>
+        </div>
+
+        <!-- Our Vision -->
+        <div class="about-section vision-section" data-aos="fade-up">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Our Vision</h2>
+                    <p>At Emjude Coding Tech, we envision a future where technology empowers every business to innovate without limits. Our goal is to be the go-to partner for companies seeking to transform their operations, secure their data, and connect with their audiences through cutting-edge digital solutions.</p>
+                    <p>We’re committed to pushing the boundaries of what’s possible, one project at a time.</p>
+                </div>
+                <div class="about-image">
+                    <img src="{{ url_for('static', filename='images/Illustration.jpg') }}" alt="Our Vision Illustration" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="cta" aria-label="Call to Action section" data-aos="fade-up">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Business?</h2>
+            <p>Contact us today to explore how we can help you achieve your digital goals.</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn" aria-label="Contact us">Contact Us</a>
+                <a href="/services" class="btn btn-secondary" aria-label="Explore services">Explore Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section (Reused from Home Page) -->
+    <footer>
+        <div class="footer-content">
+            <p>© <span id="year"></span> Emjude Coding Tech. All rights reserved.</p>
+            <ul class="social-links" aria-label="Social media links">
+                <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- JavaScript (Reused from Home Page) -->
+    <script>
+        // Menu Toggle Functionality
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        }
+
+        // Dynamic Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Close Menu on Link Click (for mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('nav-links');
+                const menuToggle = document.querySelector('.menu-toggle');
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+
+    <!-- AOS Library for Animations (Optional) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // Animation duration in milliseconds
+            once: true, // Animations only trigger once
+        });
+    </script>
+
+    <!-- External FontAwesome for Social Icons (Optional) -->
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
+    <!-- Structured Data for SEO (Schema Markup) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Emjude Coding Tech",
+        "url": "https://www.emjudecodingtech.com/about",
+        "logo": "{{ url_for('static', filename='images/logo.png') }}",
+        "description": "Learn about Emjude Coding Tech - our background, expertise, team, and vision for empowering digital innovation.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-234-567-890",
+            "contactType": "Customer Service",
+            "email": "info@emjudecodingtech.com"
+        },
+        "sameAs": [
+            "https://facebook.com/emjudecodingtech",
+            "https://twitter.com/emjudecodingtech",
+            "https://linkedin.com/company/emjudecodingtech"
+        ]
+    }
+    </script>
+</body>
+</html>

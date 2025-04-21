@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emjude Coding Tech provides secure, scalable, and intelligent tech solutions, including custom software, cybersecurity, and web/mobile apps.">
+    <meta name="keywords" content="coding, tech, software development, cybersecurity, web apps, mobile apps">
+    <meta name="author" content="Emjude Coding Tech">
+    <title>Emjude Coding Tech </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
+    <!-- AOS Library for Animations (Optional) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo">
+                <a href="/" aria-label="Emjude Coding Tech Home">
+                    <img src="{{ url_for('static', filename='images/new.png') }}" alt="Emjude Coding Tech Logo" loading="lazy">
+                </a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">
+                <span class="hamburger">☰</span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="/" aria-label="Home">Home</a></li>
+                <li><a href="/about" aria-label="About">About</a></li>
+                <li><a href="/services" aria-label="Services">Services</a></li>
+                <li><a href="/portfolio" aria-label="Portfolio">Portfolio</a></li>
+                
+                <li><a href="/contact" aria-label="Contact">Contact</a></li>
+         
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Enhanced) -->
+    <section class="hero" aria-label="Hero section">
+        <div class="hero-background">
+            <!-- Replace with your actual background image or video -->
+            <img src="{{ url_for('static', filename='images/back.jpg') }}" alt="Tech Innovation Background" loading="lazy">
+            <!-- Optional: Replace the img with a video for more engagement -->
+            <!-- <video autoplay muted loop playsinline>
+                <source src="{{ url_for('static', filename='videos/hero-video.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video> -->
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Empowering Digital Innovation</h1>
+            <p>Providing secure, scalable, and intelligent tech solutions to drive your business forward.</p>
+            <div class="hero-ctas">
+                <a href="/services" class="btn" aria-label="Explore services">Explore Our Services</a>
+                <a href="/contact" class="btn btn-secondary" aria-label="Get in touch">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section (Moved Up and Enhanced) -->
+    <section class="about" aria-label="About Us section" data-aos="fade-up">
+        <div class="about-content">
+            <div class="about-image">
+                <img src="{{ url_for('static', filename='images/about-us.jpg') }}" alt="Emjude Coding Tech Team" loading="lazy">
+            </div>
+            <div class="about-text">
+                <h2 class="section-title">Who We Are</h2>
+                <p>Emjude Coding Tech is a leading provider of innovative tech solutions, specializing in custom software development, cybersecurity, and web/mobile applications. With over a decade of experience, our team of experts is dedicated to delivering secure, scalable, and intelligent solutions that empower businesses to thrive in the digital age.</p>
+                <p>Our vision is to be the trusted partner for companies seeking to harness the power of technology, driving innovation and excellence in every project we undertake.</p>
+                <a href="/about" class="btn btn-secondary" aria-label="Learn more about us">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section (Enhanced) -->
+    <section class="features" aria-label="Features section" data-aos="fade-up">
+        <h2 class="section-title">Our Services</h2>
+        <div class="features-grid">
+            <article class="feature">
+                <figure class="feature-image">
+                    <img src="{{ url_for('static', filename='images/software-development.png') }}" alt="Custom Software Development Illustration" loading="lazy">
+                </figure>
+                <div class="feature-content">
+                    <h3>Custom Software Development</h3>
+                    <p>We build tailored solutions to meet your business needs.</p>
+                    <a href="/services" class="btn btn-secondary" aria-label="Learn more about Custom Software Development">Learn More</a>
+                </div>
+            </article>
+            <article class="feature">
+                <figure class="feature-image">
+                    <img src="{{ url_for('static', filename='images/cybersecurity.png') }}" alt="Cybersecurity Solutions Illustration" loading="lazy">
+                </figure>
+                <div class="feature-content">
+                    <h3>Cybersecurity Solutions</h3>
+                    <p>Protect your data with our advanced security strategies.</p>
+                    <a href="/services" class="btn btn-secondary" aria-label="Learn more about Cybersecurity Solutions">Learn More</a>
+                </div>
+            </article>
+            <article class="feature">
+                <figure class="feature-image">
+                    <img src="{{ url_for('static', filename='images/web-mobile.png') }}" alt="Web & Mobile Apps Illustration" loading="lazy">
+                </figure>
+                <div class="feature-content">
+                    <h3>Web & Mobile Apps</h3>
+                    <p>We create responsive and user-friendly applications.</p>
+                    <a href="/services" class="btn btn-secondary" aria-label="Learn more about Web & Mobile Apps">Learn More</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Portfolio Section (Enhanced) -->
+    <section class="portfolio" aria-label="Portfolio section" data-aos="fade-up">
+        <h2 class="section-title">Our Work</h2>
+        <div class="portfolio-grid">
+            <article class="portfolio-item">
+                <img src="{{ url_for('static', filename='images/works/store.png') }}" alt="Project 1 Screenshot" loading="lazy">
+                <div class="portfolio-content">
+                    <h3>Store Management System </h3>
+                    <p>A custom CRM system built for a leading retail company, improving customer engagement and sales efficiency.</p>
+                    <a href="/portfolio/project1" class="btn btn-secondary" aria-label="Learn more about Project 1">Learn More</a>
+                </div>
+            </article>
+            <article class="portfolio-item">
+                <img src="{{ url_for('static', filename='images/works/secure.png') }}" alt="Project 2 Screenshot" loading="lazy">
+                <div class="portfolio-content">
+                    <h3>Secure Payment System</h3>
+                    <p>A secure e-commerce platform with advanced cybersecurity features, ensuring safe transactions and data protection.</p>
+                    <a href="/portfolio/project2" class="btn btn-secondary" aria-label="Learn more about Project 2">Learn More</a>
+                </div>
+            </article>
+            <article class="portfolio-item">
+                <img src="{{ url_for('static', filename='images/works/med.jpg') }}" alt="Project 3 Screenshot" loading="lazy">
+                <div class="portfolio-content">
+                    <h3>Medicine Recommendation System</h3>
+                    <p>A responsive mobile app designed to predict diseases, recommend suitable medications, and suggest personalized workout plans for users.</p>
+                    
+                    <a href="/portfolio/project3" class="btn btn-secondary" aria-label="Learn more about Project 3">Learn More</a>
+                </div>
+            </article>
+           
+          
+           
+        </div>
+        <div class="portfolio-cta">
+            <a href="/portfolio" class="btn" aria-label="View all projects">View All Projects</a>
+        </div>
+    </section>
+
+    <!-- Testimonials Section (Enhanced) -->
+    <section class="testimonials" aria-label="Testimonials section" data-aos="fade-up">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <div class="testimonials-grid">
+            <article class="testimonial">
+                <blockquote>
+                    <p>"Emjude Coding Tech transformed our business with a custom software solution that streamlined our operations. Their expertise and support are unmatched!"</p>
+                    <cite>
+                        <img src="{{ url_for('static', filename='images/mile.png') }}" alt="Jane Doe Avatar" class="testimonial-avatar" loading="lazy">
+                        <span>Agyei Samuel, CEO of Milestonefx</span>
+                    </cite>
+                </blockquote>
+            </article>
+            <article class="testimonial">
+                <blockquote>
+                    <p>"The cybersecurity solutions provided by Emjude Coding Tech gave us peace of mind, knowing our data is secure. Highly recommend their services!"</p>
+                    <cite>
+                        <img src="{{ url_for('static', filename='images/kiito.jpg') }}" alt="John Smith Avatar" class="testimonial-avatar" loading="lazy">
+                        <span>Baah Peprah Enoch, CEO of Kiito Tech</span>
+                    </cite>
+                </blockquote>
+            </article>
+            <article class="testimonial">
+                <blockquote>
+                    <p>"The mobile app developed by Emjude Coding Tech exceeded our expectations. It's user-friendly and has significantly boosted our customer engagement."</p>
+                    <cite>
+                        <img src="{{ url_for('static', filename='images/ama.jpg') }}" alt="Emily Johnson Avatar" class="testimonial-avatar" loading="lazy">
+                        <span>Adinkrah Yeboah, Founder of Flash Trip Prediction</span>
+                    </cite>
+                </blockquote>
+            </article>
+        </div>
+    </section>
+
+    <!-- Contact Section (Enhanced) -->
+    <section class="contact" aria-label="Contact section" data-aos="fade-up">
+        <h2 class="section-title">Get in Touch</h2>
+        <div class="contact-content">
+            <div class="contact-form">
+                <form action="/submit-contact" method="POST" aria-label="Contact form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p>Email: <a href="mailto:emjudecodingtech@gmail.com">emjudecodingtech@gmail.com</a></p>
+                <p>Phone: <a href="tel:+233504031409">+233 (504) 031-409</a></p>
+                <!-- Optional: Add a map (e.g., Google Maps embed) -->
+                <div class="contact-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d1303.9916528619995!2d-2.332034038897128!3d7.31613881944373!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sgh!4v1741709190991!5m2!1sen!2sgh" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div> 
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <p>© <span id="year"></span> Emjude Coding Tech. All rights reserved.</p>
+            <ul class="social-links" aria-label="Social media links">
+                <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Menu Toggle Functionality
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        }
+
+        // Dynamic Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Close Menu on Link Click (for mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('nav-links');
+                const menuToggle = document.querySelector('.menu-toggle');
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+
+    <!-- AOS Library for Animations (Optional) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // Animation duration in milliseconds
+            once: true, // Animations only trigger once
+        });
+    </script>
+
+    <!-- External FontAwesome for Social Icons (Optional) -->
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
+    <!-- Structured Data for SEO (Schema Markup) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Emjude Coding Tech",
+        "url": "https://www.emjudecodingtech.com",
+        "logo": "{{ url_for('static', filename='images/logo.png') }}",
+        "description": "Emjude Coding Tech provides secure, scalable, and intelligent tech solutions, including custom software, cybersecurity, and web/mobile apps.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-234-567-890",
+            "contactType": "Customer Service",
+            "email": "info@emjudecodingtech.com"
+        },
+        "sameAs": [
+            "https://facebook.com/emjudecodingtech",
+            "https://twitter.com/emjudecodingtech",
+            "https://linkedin.com/company/emjudecodingtech"
+        ]
+    }
+    </script>
+</body>
+</html>

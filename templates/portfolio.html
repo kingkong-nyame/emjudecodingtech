@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover Emjude Coding Tech's portfolio of past projects in custom software, cybersecurity, and web & mobile app development.">
+    <meta name="keywords" content="portfolio, projects, custom software, cybersecurity, web apps, mobile apps, tech solutions">
+    <meta name="author" content="Emjude Coding Tech">
+    <title>Portfolio | Emjude Coding Tech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/port.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
+    <!-- AOS Library for Animations (Optional) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section (Reused from Home Page) -->
+    <header>
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo">
+                <a href="/" aria-label="Emjude Coding Tech Home">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Emjude Coding Tech Logo" loading="lazy">
+                </a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">
+                <span class="hamburger">☰</span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="/" aria-label="Home">Home</a></li>
+                <li><a href="/about" aria-label="About">About</a></li>
+                <li><a href="/services" aria-label="Services">Services</a></li>
+                <li><a href="/portfolio" aria-label="Portfolio" class="active">Portfolio</a></li>
+               
+                <li><a href="/contact" aria-label="Contact">Contact</a></li>
+              
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Customized for Portfolio Page) -->
+    <section class="hero portfolio-hero" aria-label="Portfolio Hero section">
+        <div class="hero-background">
+            <img src="{{ url_for('static', filename='images/works/home.png') }}" alt="Portfolio Background" loading="lazy">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Our Portfolio</h1>
+            <p>Showcasing our expertise through innovative projects that drive success.</p>
+        </div>
+    </section>
+
+    <!-- Portfolio Section (Detailed Content) -->
+    <section class="portfolio-details" aria-label="Portfolio Details section">
+        <div class="portfolio-grid" data-aos="fade-up">
+            <!-- Project 1 -->
+            <article class="portfolio-item">
+                <div class="portfolio-image">
+                    <img src="{{ url_for('static', filename='images/works/store.png') }}" alt="RetailCorp CRM Screenshot" loading="lazy">
+                </div>
+                <div class="portfolio-content">
+                    <h2 class="portfolio-title">Store Management System</h2>
+                    <p>A custom CRM system built for a leading retail company, improving customer engagement and sales efficiency with real-time analytics and seamless integration.</p>
+                    <a href="/portfolio/retailcorp-crm" class="btn btn-secondary" aria-label="Learn more about RetailCorp CRM">Learn More</a>
+                </div>
+            </article>
+
+            <!-- Project 2 -->
+            <article class="portfolio-item alt-background">
+                <div class="portfolio-image">
+                    <img src="{{ url_for('static', filename='images/works/secure.png') }}" alt="SecureTech E-Commerce Screenshot" loading="lazy">
+                </div>
+                <div class="portfolio-content">
+                    <h2 class="portfolio-title">Secure Payment System</h2>
+                    <p>A secure e-commerce platform with advanced cybersecurity features, ensuring safe transactions and data protection for a global online retailer.</p>
+                    <a href="/portfolio/securetech-ecommerce" class="btn btn-secondary" aria-label="Learn more about SecureTech E-Commerce">Learn More</a>
+                </div>
+            </article>
+
+            <!-- Project 3 -->
+            <article class="portfolio-item">
+                <div class="portfolio-image">
+                    <img src="{{ url_for('static', filename='images/works/med.jpg') }}" alt="FitBrand Mobile App Screenshot" loading="lazy">
+                </div>
+                <div class="portfolio-content">
+                    <h2 class="portfolio-title">Medicine Recommendation System</h2>
+                    <p>A responsive mobile app designed to predict diseases based on symptoms and provide personalized medication, dietary, and workout recommendations to improve health outcomes.</p>
+                      <a href="/portfolio/fitbrand-mobile" class="btn btn-secondary" aria-label="Learn more about FitBrand Mobile App">Learn More</a>
+                </div>
+            </article>
+            <article class="portfolio-item alt-background">
+                <div class="portfolio-image">
+                    <img src="{{ url_for('static', filename='images/works/flash.png') }}" alt="EduLearn Platform Screenshot"
+                        loading="lazy">
+                </div>
+                <div class="portfolio-content">
+                    <h2 class="portfolio-title">Flash Trip Prediction</h2>
+                    <p>A responsive mobile app that predicts trip durations based on real-time and historical data, helping users
+                        plan efficient and timely journeys.</p>
+                    <a href="/portfolio/edulearn-platform" class="btn btn-secondary"
+                        aria-label="Learn more about EduLearn Platform">Learn More</a>
+                </div>
+            </article>
+            <article class="portfolio-item alt-background">
+                <div class="portfolio-image">
+                    <img src="{{ url_for('static', filename='images/works/crop.jpg') }}" alt="EduLearn Platform Screenshot"
+                        loading="lazy">
+                </div>
+                <div class="portfolio-content">
+                    <h2 class="portfolio-title">Crop Yield Prediction</h2>
+                    <p>A responsive mobile app that predicts trip durations based on real-time and historical data, helping users
+                        plan efficient and timely journeys.</p>
+                    <a href="/portfolio/edulearn-platform" class="btn btn-secondary"
+                        aria-label="Learn more about EduLearn Platform">Learn More</a>
+                </div>
+            </article>
+            <article class="portfolio-item alt-background">
+                <div class="portfolio-image">
+                    <img src="{{ url_for('static', filename='images/works/house.png') }}" alt="EduLearn Platform Screenshot"
+                        loading="lazy">
+                </div>
+                <div class="portfolio-content">
+                    <h2 class="portfolio-title">House Rental System</h2>
+                    <p>A responsive mobile app that streamlines property rentals by allowing landlords to list properties, tenants
+                        to apply, make secure payments, and track maintenance requests effortlessly.</p>
+            
+                    <a href="/portfolio/edulearn-platform" class="btn btn-secondary"
+                        aria-label="Learn more about EduLearn Platform">Learn More</a>
+                </div>
+            </article>
+            <article class="portfolio-item alt-background">
+                <div class="portfolio-image">
+                    <img src="{{ url_for('static', filename='images/works/oasl.png') }}" alt="EduLearn Platform Screenshot"
+                        loading="lazy">
+                </div>
+                <div class="portfolio-content">
+                    <h2 class="portfolio-title">OASL Orientation System</h2>
+                    <p>A responsive mobile app designed to facilitate orientation programs by providing new employees with essential
+                        information, interactive guides, schedules, and resources for a smooth onboarding experience.</p>
+                    <a href="/portfolio/edulearn-platform" class="btn btn-secondary"
+                        aria-label="Learn more about EduLearn Platform">Learn More</a>
+                </div>
+            </article>
+            <article class="portfolio-item alt-background">
+                <div class="portfolio-image">
+                    <img src="{{ url_for('static', filename='images/works/E-commerce.png') }}" alt="EduLearn Platform Screenshot"
+                        loading="lazy">
+                </div>
+                <div class="portfolio-content">
+                    <h2 class="portfolio-title">E-Commerce Website</h2>
+                    <p>A fully responsive e-commerce platform that enables seamless online shopping with secure payment processing,
+                        product management, and a user-friendly interface for buyers and sellers.</p>
+            
+                    <a href="/portfolio/edulearn-platform" class="btn btn-secondary"
+                        aria-label="Learn more about EduLearn Platform">Learn More</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="cta" aria-label="Call to Action section" data-aos="fade-up">
+        <div class="cta-content">
+            <h2>Impressed by Our Work?</h2>
+            <p>Contact us to start your project or explore our services.</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn" aria-label="Contact us">Contact Us</a>
+                <a href="/services" class="btn btn-secondary" aria-label="Explore services">Explore Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section (Reused from Home Page) -->
+    <footer>
+        <div class="footer-content">
+            <p>© <span id="year"></span> Emjude Coding Tech. All rights reserved.</p>
+            <ul class="social-links" aria-label="Social media links">
+                <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- JavaScript (Reused from Home Page) -->
+    <script>
+        // Menu Toggle Functionality
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        }
+
+        // Dynamic Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Close Menu on Link Click (for mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('nav-links');
+                const menuToggle = document.querySelector('.menu-toggle');
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+
+    <!-- AOS Library for Animations (Optional) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // Animation duration in milliseconds
+            once: true, // Animations only trigger once
+        });
+    </script>
+
+    <!-- External FontAwesome for Social Icons (Optional) -->
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
+    <!-- Structured Data for SEO (Schema Markup) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Emjude Coding Tech",
+        "url": "https://www.emjudecodingtech.com/portfolio",
+        "logo": "{{ url_for('static', filename='images/logo.png') }}",
+        "description": "Discover Emjude Coding Tech's portfolio of past projects in custom software, cybersecurity, and web & mobile app development.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-234-567-890",
+            "contactType": "Customer Service",
+            "email": "info@emjudecodingtech.com"
+        },
+        "sameAs": [
+            "https://facebook.com/emjudecodingtech",
+            "https://twitter.com/emjudecodingtech",
+            "https://linkedin.com/company/emjudecodingtech"
+        ],
+        "workExample": [
+            {
+                "@type": "CreativeWork",
+                "name": "RetailCorp CRM",
+                "description": "A custom CRM system built for a leading retail company."
+            },
+            {
+                "@type": "CreativeWork",
+                "name": "SecureTech E-Commerce",
+                "description": "A secure e-commerce platform with advanced cybersecurity features."
+            },
+            {
+                "@type": "CreativeWork",
+                "name": "FitBrand Mobile App",
+                "description": "A responsive mobile app for a fitness brand."
+            },
+            {
+                "@type": "CreativeWork",
+                "name": "EduLearn Platform",
+                "description": "An educational platform with custom software for interactive learning."
+            }
+        ]
+    }
+    </script>
+</body>
+</html>

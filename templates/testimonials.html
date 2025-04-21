@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Read testimonials from Emjude Coding Tech's satisfied clients about our custom software, cybersecurity, and app development services.">
+    <meta name="keywords" content="testimonials, client reviews, custom software, cybersecurity, web apps, mobile apps">
+    <meta name="author" content="Emjude Coding Tech">
+    <title>Testimonials | Emjude Coding Tech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/test.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    <!-- AOS Library for Animations (Optional) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section (Reused from Home Page) -->
+    <header>
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo">
+                <a href="/" aria-label="Emjude Coding Tech Home">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Emjude Coding Tech Logo" loading="lazy">
+                </a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">
+                <span class="hamburger">☰</span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="/" aria-label="Home">Home</a></li>
+                <li><a href="/about" aria-label="About">About</a></li>
+                <li><a href="/services" aria-label="Services">Services</a></li>
+                <li><a href="/portfolio" aria-label="Portfolio">Portfolio</a></li>
+                <li><a href="/testimonials" aria-label="Testimonials" class="active">Testimonials</a></li>
+                <li><a href="/contact" aria-label="Contact">Contact</a></li>
+             
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Customized for Testimonials Page) -->
+    <section class="hero testimonials-hero" aria-label="Testimonials Hero section">
+        <div class="hero-background">
+            <img src="{{ url_for('static', filename='images/works/home.png') }}" alt="Testimonials Background" loading="lazy">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>What Our Clients Say</h1>
+            <p>Hear from those who’ve experienced our exceptional tech solutions.</p>
+        </div>
+    </section>
+
+    <!-- Testimonials Section (Detailed Content) -->
+    <section class="testimonials-details" aria-label="Testimonials Details section">
+        <div class="testimonials-grid" data-aos="fade-up">
+            <!-- Testimonial 1 -->
+            <article class="testimonial-item">
+                <blockquote>
+                    <p>"Emjude Coding Tech transformed our business with a custom CRM that streamlined our operations. Their team’s expertise and dedication are unmatched!"</p>
+                </blockquote>
+                <div class="testimonial-author">
+                    <img src="{{ url_for('static', filename='images/client1.jpg') }}" alt="Sarah Johnson" loading="lazy">
+                    <div class="author-info">
+                        <h3>Sarah Johnson</h3>
+                        <p>CEO, RetailCorp</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Testimonial 2 -->
+            <article class="testimonial-item alt-background">
+                <blockquote>
+                    <p>"Their cybersecurity solutions gave us peace of mind. Our e-commerce platform is now secure and thriving, thanks to Emjude’s proactive approach."</p>
+                </blockquote>
+                <div class="testimonial-author">
+                    <img src="{{ url_for('static', filename='images/client2.jpg') }}" alt="Michael Lee" loading="lazy">
+                    <div class="author-info">
+                        <h3>Michael Lee</h3>
+                        <p>CTO, SecureTech</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Testimonial 3 -->
+            <article class="testimonial-item">
+                <blockquote>
+                    <p>"The mobile app Emjude developed for us is a game-changer. It’s intuitive, fast, and has boosted our user engagement significantly."</p>
+                </blockquote>
+                <div class="testimonial-author">
+                    <img src="{{ url_for('static', filename='images/client3.jpg') }}" alt="Emily Davis" loading="lazy">
+                    <div class="author-info">
+                        <h3>Emily Davis</h3>
+                        <p>Founder, FitBrand</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Testimonial 4 (Optional Additional Testimonial) -->
+            <article class="testimonial-item alt-background">
+                <blockquote>
+                    <p>"Working with Emjude on our educational platform was a fantastic experience. Their custom software exceeded our expectations!"</p>
+                </blockquote>
+                <div class="testimonial-author">
+                    <img src="{{ url_for('static', filename='images/client4.jpg') }}" alt="David Brown" loading="lazy">
+                    <div class="author-info">
+                        <h3>David Brown</h3>
+                        <p>Director, EduLearn</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="cta" aria-label="Call to Action section" data-aos="fade-up">
+        <div class="cta-content">
+            <h2>Ready to Experience Our Expertise?</h2>
+            <p>Contact us to start your project or explore our services.</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn" aria-label="Contact us">Contact Us</a>
+                <a href="/services" class="btn btn-secondary" aria-label="Explore services">Explore Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section (Reused from Home Page) -->
+    <footer>
+        <div class="footer-content">
+            <p>© <span id="year"></span> Emjude Coding Tech. All rights reserved.</p>
+            <ul class="social-links" aria-label="Social media links">
+                <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- JavaScript (Reused from Home Page) -->
+    <script>
+        // Menu Toggle Functionality
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        }
+
+        // Dynamic Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Close Menu on Link Click (for mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('nav-links');
+                const menuToggle = document.querySelector('.menu-toggle');
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+
+    <!-- AOS Library for Animations (Optional) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // Animation duration in milliseconds
+            once: true, // Animations only trigger once
+        });
+    </script>
+
+    <!-- External FontAwesome for Social Icons (Optional) -->
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
+    <!-- Structured Data for SEO (Schema Markup) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Emjude Coding Tech",
+        "url": "https://www.emjudecodingtech.com/testimonials",
+        "logo": "{{ url_for('static', filename='images/logo.png') }}",
+        "description": "Read testimonials from Emjude Coding Tech's satisfied clients about our custom software, cybersecurity, and app development services.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-234-567-890",
+            "contactType": "Customer Service",
+            "email": "info@emjudecodingtech.com"
+        },
+        "sameAs": [
+            "https://facebook.com/emjudecodingtech",
+            "https://twitter.com/emjudecodingtech",
+            "https://linkedin.com/company/emjudecodingtech"
+        ],
+        "review": [
+            {
+                "@type": "Review",
+                "reviewBody": "Emjude Coding Tech transformed our business with a custom CRM that streamlined our operations.",
+                "author": {"@type": "Person", "name": "Sarah Johnson"},
+                "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}
+            },
+            {
+                "@type": "Review",
+                "reviewBody": "Their cybersecurity solutions gave us peace of mind. Our e-commerce platform is now secure and thriving.",
+                "author": {"@type": "Person", "name": "Michael Lee"},
+                "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}
+            },
+            {
+                "@type": "Review",
+                "reviewBody": "The mobile app Emjude developed for us is a game-changer. It’s intuitive and fast.",
+                "author": {"@type": "Person", "name": "Emily Davis"},
+                "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}
+            },
+            {
+                "@type": "Review",
+                "reviewBody": "Working with Emjude on our educational platform was a fantastic experience.",
+                "author": {"@type": "Person", "name": "David Brown"},
+                "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}
+            }
+        ]
+    }
+    </script>
+</body>
+</html>

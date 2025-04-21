@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Emjude Coding Tech's services: custom software development, cybersecurity solutions, and web & mobile app development.">
+    <meta name="keywords" content="services, custom software, cybersecurity, web apps, mobile apps, tech solutions">
+    <meta name="author" content="Emjude Coding Tech">
+    <title>Services | Emjude Coding Tech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/service.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
+    <!-- AOS Library for Animations (Optional) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section (Reused from Home Page) -->
+    <header>
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo">
+                <a href="/" aria-label="Emjude Coding Tech Home">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Emjude Coding Tech Logo" loading="lazy">
+                </a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">
+                <span class="hamburger">☰</span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="/" aria-label="Home">Home</a></li>
+                <li><a href="/about" aria-label="About">About</a></li>
+                <li><a href="/services" aria-label="Services" class="active">Services</a></li>
+                <li><a href="/portfolio" aria-label="Portfolio">Portfolio</a></li>
+              
+                <li><a href="/contact" aria-label="Contact">Contact</a></li>
+              
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Customized for Services Page) -->
+    <section class="hero services-hero" aria-label="Services Hero section">
+        <div class="hero-background">
+            <img src="{{ url_for('static', filename='images/works/home.png') }}" alt="Services Background" loading="lazy">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Our Services</h1>
+            <p>Delivering secure, scalable, and innovative tech solutions tailored to your needs.</p>
+        </div>
+    </section>
+
+    <!-- Services Section (Detailed Content) -->
+    <section class="services-details" aria-label="Services Details section">
+        <!-- Custom Software Development -->
+        <div class="service-section" data-aos="fade-up">
+            <div class="service-content">
+                <div class="service-image">
+                    <img src="{{ url_for('static', filename='images/software-development.png') }}" alt="Custom Software Development Illustration" loading="lazy">
+                </div>
+                <div class="service-text">
+                    <h2 class="section-title">Custom Software Development</h2>
+                    <p>We design and build bespoke software solutions to streamline your business processes, enhance productivity, and drive growth. From concept to deployment, our team works closely with you to ensure your software meets your unique requirements.</p>
+                    <ul class="service-benefits">
+                        <li>Tailored to your specific business needs</li>
+                        <li>Scalable and adaptable to future growth</li>
+                        <li>Integrated with cutting-edge technologies</li>
+                    </ul>
+                    <a href="/contact" class="btn btn-secondary" aria-label="Get a quote for Custom Software Development">Get a Quote</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cybersecurity Solutions -->
+        <div class="service-section alt-background" data-aos="fade-up">
+            <div class="service-content reverse">
+                <div class="service-text">
+                    <h2 class="section-title">Cybersecurity Solutions</h2>
+                    <p>Protect your business from digital threats with our advanced cybersecurity services. We offer comprehensive strategies, including risk assessments, threat monitoring, and incident response, to safeguard your data and systems.</p>
+                    <ul class="service-benefits">
+                        <li>Proactive threat detection and prevention</li>
+                        <li>Robust encryption and data protection</li>
+                        <li>24/7 monitoring and support</li>
+                    </ul>
+                    <a href="/contact" class="btn btn-secondary" aria-label="Get a quote for Cybersecurity Solutions">Get a Quote</a>
+                </div>
+                <div class="service-image">
+                    <img src="{{ url_for('static', filename='images/cybersecurity.png') }}" alt="Cybersecurity Solutions Illustration" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Web & Mobile Apps -->
+        <div class="service-section" data-aos="fade-up">
+            <div class="service-content">
+                <div class="service-image">
+                    <img src="{{ url_for('static', filename='images/web-mobile.png') }}" alt="Web & Mobile Apps Illustration" loading="lazy">
+                </div>
+                <div class="service-text">
+                    <h2 class="section-title">Web & Mobile Apps</h2>
+                    <p>We create responsive, user-friendly web and mobile applications that engage your audience and enhance your digital presence. Our apps are designed for performance, accessibility, and seamless cross-platform experiences.</p>
+                    <ul class="service-benefits">
+                        <li>Responsive design for all devices</li>
+                        <li>Intuitive user interfaces</li>
+                        <li>Fast and reliable performance</li>
+                    </ul>
+                    <a href="/contact" class="btn btn-secondary" aria-label="Get a quote for Web & Mobile Apps">Get a Quote</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="cta" aria-label="Call to Action section" data-aos="fade-up">
+        <div class="cta-content">
+            <h2>Ready to Elevate Your Business?</h2>
+            <p>Contact us to discuss your project or explore our past work.</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn" aria-label="Contact us">Contact Us</a>
+                <a href="/portfolio" class="btn btn-secondary" aria-label="View portfolio">View Portfolio</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section (Reused from Home Page) -->
+    <footer>
+        <div class="footer-content">
+            <p>© <span id="year"></span> Emjude Coding Tech. All rights reserved.</p>
+            <ul class="social-links" aria-label="Social media links">
+                <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- JavaScript (Reused from Home Page) -->
+    <script>
+        // Menu Toggle Functionality
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        }
+
+        // Dynamic Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Close Menu on Link Click (for mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('nav-links');
+                const menuToggle = document.querySelector('.menu-toggle');
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+
+    <!-- AOS Library for Animations (Optional) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // Animation duration in milliseconds
+            once: true, // Animations only trigger once
+        });
+    </script>
+
+    <!-- External FontAwesome for Social Icons (Optional) -->
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
+    <!-- Structured Data for SEO (Schema Markup) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Emjude Coding Tech",
+        "url": "https://www.emjudecodingtech.com/services",
+        "logo": "{{ url_for('static', filename='images/logo.png') }}",
+        "description": "Explore Emjude Coding Tech's services: custom software development, cybersecurity solutions, and web & mobile app development.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-234-567-890",
+            "contactType": "Customer Service",
+            "email": "info@emjudecodingtech.com"
+        },
+        "sameAs": [
+            "https://facebook.com/emjudecodingtech",
+            "https://twitter.com/emjudecodingtech",
+            "https://linkedin.com/company/emjudecodingtech"
+        ],
+        "offers": [
+            {
+                "@type": "Offer",
+                "name": "Custom Software Development",
+                "description": "Tailored software solutions to streamline your business processes."
+            },
+            {
+                "@type": "Offer",
+                "name": "Cybersecurity Solutions",
+                "description": "Advanced cybersecurity services to protect your data and systems."
+            },
+            {
+                "@type": "Offer",
+                "name": "Web & Mobile Apps",
+                "description": "Responsive and user-friendly web and mobile applications."
+            }
+        ]
+    }
+    </script>
+</body>
+</html>

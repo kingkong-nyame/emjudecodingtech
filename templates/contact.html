@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Emjude Coding Tech for inquiries about custom software, cybersecurity, and app development services.">
+    <meta name="keywords" content="contact, get in touch, custom software, cybersecurity, web apps, mobile apps">
+    <meta name="author" content="Emjude Coding Tech">
+    <title>Contact | Emjude Coding Tech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
+    <!-- AOS Library for Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo">
+                <a href="/" aria-label="Emjude Coding Tech Home">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Emjude Coding Tech Logo" loading="lazy">
+                </a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">
+                <span class="hamburger">☰</span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="/" aria-label="Home">Home</a></li>
+                <li><a href="/about" aria-label="About">About</a></li>
+                <li><a href="/services" aria-label="Services">Services</a></li>
+                <li><a href="/portfolio" aria-label="Portfolio">Portfolio</a></li>
+                
+                <li><a href="/contact" aria-label="Contact" class="active">Contact</a></li>
+               
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero contact-hero" aria-label="Contact Hero section">
+        <div class="hero-background">
+            <img src="{{ url_for('static', filename='images/works/home.png') }}" alt="Contact Background" loading="lazy">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Get in Touch</h1>
+            <p>We’re here to help you bring your ideas to life.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-details" aria-label="Contact Details section">
+        <div class="contact-container" data-aos="fade-up">
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2 class="section-title">Send Us a Message</h2>
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form action="{{ url_for('submit_contact') }}" method="POST" id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required aria-required="true" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required aria-required="true" placeholder="Your Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Your Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message <span class="required">*</span></label>
+                        <textarea id="message" name="message" rows="5" required aria-required="true" placeholder="Tell us about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="btn" aria-label="Submit contact form">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <h2 class="section-title">Contact Information</h2>
+                <ul class="contact-list">
+                    <li>
+                        <i class="fas fa-phone-alt"></i>
+                        <span><a href="tel:+233504031409" aria-label="Call us at +233 504 031 409">+233 504 031 409</a></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:emjudecodingtech@gmail.com" aria-label="Email us at emjudecodingtech@gmail.com">emjudecodingtech@gmail.com</a></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Adom Junction, Sunyani, Ghana</span>
+                    </li>
+                </ul>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d1303.9916528619995!2d-2.332034038897128!3d7.31613881944373!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sgh!4v1741709190991!5m2!1sen!2sgh" 
+                            width="100%" 
+                            height="300" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            aria-label="Map showing our location"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="cta" aria-label="Call to Action section" data-aos="fade-up">
+        <div class="cta-content">
+            <h2>Ready to Start Your Project?</h2>
+            <p>Explore our services or check out our portfolio.</p>
+            <div class="cta-buttons">
+                <a href="/services" class="btn" aria-label="Explore services">Explore Services</a>
+                <a href="/portfolio" class="btn btn-secondary" aria-label="View portfolio">View Portfolio</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <p>© <span id="year"></span> Emjude Coding Tech. All rights reserved.</p>
+            <ul class="social-links" aria-label="Social media links">
+                <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        }
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('nav-links');
+                const menuToggle = document.querySelector('.menu-toggle');
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</body>
+</html>

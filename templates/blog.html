@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Read the latest insights from Emjude Coding Tech on tech trends, software development, cybersecurity, and more.">
+    <meta name="keywords" content="blog, tech trends, software development, cybersecurity, web apps, mobile apps">
+    <meta name="author" content="Emjude Coding Tech">
+    <title>Blog | Emjude Coding Tech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    <!-- AOS Library for Animations (Optional) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section (Reused from Home Page) -->
+    <header>
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo">
+                <a href="/" aria-label="Emjude Coding Tech Home">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Emjude Coding Tech Logo" loading="lazy">
+                </a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">
+                <span class="hamburger">☰</span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="/" aria-label="Home">Home</a></li>
+                <li><a href="/about" aria-label="About">About</a></li>
+                <li><a href="/services" aria-label="Services">Services</a></li>
+                <li><a href="/portfolio" aria-label="Portfolio">Portfolio</a></li>
+                <li><a href="/testimonials" aria-label="Testimonials">Testimonials</a></li>
+                <li><a href="/contact" aria-label="Contact">Contact</a></li>
+                <li><a href="/blog" aria-label="Blog" class="active">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Customized for Blog Page) -->
+    <section class="hero blog-hero" aria-label="Blog Hero section">
+        <div class="hero-background">
+            <img src="{{ url_for('static', filename='images/blog-hero.jpg') }}" alt="Blog Background" loading="lazy">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Our Blog</h1>
+            <p>Stay informed with the latest insights and trends in technology.</p>
+        </div>
+    </section>
+
+    <!-- Blog Section (Detailed Content) -->
+    <section class="blog-details" aria-label="Blog Details section">
+        <div class="blog-grid" data-aos="fade-up">
+            <!-- Blog Post 1 -->
+            <article class="blog-post">
+                <div class="blog-image">
+                    <img src="{{ url_for('static', filename='images/blog1.jpg') }}" alt="Cybersecurity Trends Thumbnail" loading="lazy">
+                </div>
+                <div class="blog-content">
+                    <h2 class="blog-title">Top 5 Cybersecurity Trends in 2024</h2>
+                    <p class="blog-meta">Posted on <time datetime="2024-01-15">January 15, 2024</time> by <span>John Doe</span></p>
+                    <p class="blog-excerpt">Stay ahead of the curve with our insights into the latest cybersecurity trends shaping the industry, including AI-driven security and zero-trust architecture.</p>
+                    <a href="/blog/cybersecurity-trends-2024" class="btn btn-secondary" aria-label="Read more about Cybersecurity Trends">Read More</a>
+                </div>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="blog-post alt-background">
+                <div class="blog-image">
+                    <img src="{{ url_for('static', filename='images/blog2.jpg') }}" alt="Custom Software Thumbnail" loading="lazy">
+                </div>
+                <div class="blog-content">
+                    <h2 class="blog-title">Why Custom Software is Essential for Business Growth</h2>
+                    <p class="blog-meta">Posted on <time datetime="2024-02-10">February 10, 2024</time> by <span>Jane Smith</span></p>
+                    <p class="blog-excerpt">Discover how custom software solutions can drive efficiency, scalability, and innovation in your business operations.</p>
+                    <a href="/blog/custom-software-growth" class="btn btn-secondary" aria-label="Read more about Custom Software">Read More</a>
+                </div>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article class="blog-post">
+                <div class="blog-image">
+                    <img src="{{ url_for('static', filename='images/blog3.jpg') }}" alt="Mobile App Design Thumbnail" loading="lazy">
+                </div>
+                <div class="blog-content">
+                    <h2 class="blog-title">Best Practices for Mobile App Design in 2024</h2>
+                    <p class="blog-meta">Posted on <time datetime="2024-03-05">March 5, 2024</time> by <span>Emily Johnson</span></p>
+                    <p class="blog-excerpt">Learn the latest design principles to create user-friendly and high-performing mobile apps that stand out in a competitive market.</p>
+                    <a href="/blog/mobile-app-design-2024" class="btn btn-secondary" aria-label="Read more about Mobile App Design">Read More</a>
+                </div>
+            </article>
+
+            <!-- Blog Post 4 (Optional Additional Post) -->
+            <article class="blog-post alt-background">
+                <div class="blog-image">
+                    <img src="{{ url_for('static', filename='images/blog4.jpg') }}" alt="Cloud Computing Thumbnail" loading="lazy">
+                </div>
+                <div class="blog-content">
+                    <h2 class="blog-title">The Future of Cloud Computing</h2>
+                    <p class="blog-meta">Posted on <time datetime="2024-04-20">April 20, 2024</time> by <span>John Doe</span></p>
+                    <p class="blog-excerpt">Explore how cloud computing is evolving and its impact on businesses, from cost savings to enhanced scalability.</p>
+                    <a href="/blog/future-of-cloud-computing" class="btn btn-secondary" aria-label="Read more about Cloud Computing">Read More</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="cta" aria-label="Call to Action section" data-aos="fade-up">
+        <div class="cta-content">
+            <h2>Enjoyed Our Insights?</h2>
+            <p>Contact us to discuss your project or explore our services.</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn" aria-label="Contact us">Contact Us</a>
+                <a href="/services" class="btn btn-secondary" aria-label="Explore services">Explore Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section (Reused from Home Page) -->
+    <footer>
+        <div class="footer-content">
+            <p>© <span id="year"></span> Emjude Coding Tech. All rights reserved.</p>
+            <ul class="social-links" aria-label="Social media links">
+                <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- JavaScript (Reused from Home Page) -->
+    <script>
+        // Menu Toggle Functionality
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        }
+
+        // Dynamic Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Close Menu on Link Click (for mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('nav-links');
+                const menuToggle = document.querySelector('.menu-toggle');
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+
+    <!-- AOS Library for Animations (Optional) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // Animation duration in milliseconds
+            once: true, // Animations only trigger once
+        });
+    </script>
+
+    <!-- External FontAwesome for Social Icons (Optional) -->
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
+    <!-- Structured Data for SEO (Schema Markup) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Emjude Coding Tech Blog",
+        "url": "https://www.emjudecodingtech.com/blog",
+        "description": "Read the latest insights from Emjude Coding Tech on tech trends, software development, cybersecurity, and more.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Emjude Coding Tech",
+            "logo": "{{ url_for('static', filename='images/logo.png') }}"
+        },
+        "blogPost": [
+            {
+                "@type": "BlogPosting",
+                "headline": "Top 5 Cybersecurity Trends in 2024",
+                "datePublished": "2024-01-15",
+                "author": {"@type": "Person", "name": "John Doe"},
+                "image": "{{ url_for('static', filename='images/blog1.jpg') }}",
+                "description": "Stay ahead of the curve with our insights into the latest cybersecurity trends."
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "Why Custom Software is Essential for Business Growth",
+                "datePublished": "2024-02-10",
+                "author": {"@type": "Person", "name": "Jane Smith"},
+                "image": "{{ url_for('static', filename='images/blog2.jpg') }}",
+                "description": "Discover how custom software solutions can drive efficiency and innovation."
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "Best Practices for Mobile App Design in 2024",
+                "datePublished": "2024-03-05",
+                "author": {"@type": "Person", "name": "Emily Johnson"},
+                "image": "{{ url_for('static', filename='images/blog3.jpg') }}",
+                "description": "Learn the latest design principles for user-friendly mobile apps."
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "The Future of Cloud Computing",
+                "datePublished": "2024-04-20",
+                "author": {"@type": "Person", "name": "John Doe"},
+                "image": "{{ url_for('static', filename='images/blog4.jpg') }}",
+                "description": "Explore how cloud computing is evolving and its impact on businesses."
+            }
+        ]
+    }
+    </script>
+</body>
+</html>

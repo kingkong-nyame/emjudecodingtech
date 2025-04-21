@@ -1,0 +1,641 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+}
+
+/* Header and Navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #111827; /* Primary: Dark Navy Blue */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo img {
+    max-height: 80px;
+    width: auto;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff; /* Text: White for contrast */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #6a0dad; /* Accent 2: Purple for hover effect */
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: #ffffff; /* Text: White for contrast */
+    cursor: pointer;
+}
+
+/* Hero Section (Enhanced) */
+.hero {
+    position: relative;
+    color: #ffffff; /* Text: White for contrast */
+    text-align: center;
+    padding: 6rem 2rem;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -2;
+}
+
+.hero-background img,
+.hero-background video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7); /* Darkens the background for better text contrast */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.7), rgba(46, 204, 113, 0.5)); /* Primary to Accent 1 gradient overlay */
+    z-index: -1;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+.hero-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #2ecc71; /* Accent 1: Green for buttons */
+    color: #ffffff; /* Text: White for contrast */
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #d1d5db; /* Hover Effects: Light Gray */
+    color: #111827; /* Primary: Dark Navy Blue for text contrast on hover */
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #6a0dad; /* Accent 2: Purple for secondary buttons */
+    color: #ffffff; /* Text: White for contrast */
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.btn-secondary:hover {
+    background-color: #d1d5db; /* Hover Effects: Light Gray */
+    color: #111827; /* Primary: Dark Navy Blue for text contrast */
+    transform: translateY(-2px);
+}
+
+/* About Us Section (Enhanced) */
+.about {
+    padding: 4rem 2rem;
+    background-color: #fff; /* White background for contrast */
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.about-image:hover img {
+    transform: scale(1.05);
+}
+
+.about-text {
+    padding: 1rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: #111827; /* Primary: Dark Navy Blue */
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.about-text p {
+    margin-bottom: 1rem;
+    color: #666; /* Slightly lighter text for contrast */
+    font-size: 1.1rem;
+}
+
+/* Features Section (Enhanced) */
+.features {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9; /* Light background for contrast */
+    text-align: center;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature {
+    background-color: #ffffff; /* White background for each feature card */
+    border-radius: 10px;
+    overflow: hidden; /* Ensures image doesn't overflow the card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.feature-image {
+    margin: 0;
+    padding: 0;
+    line-height: 0; /* Removes any unwanted spacing below the image */
+}
+
+.feature-image img {
+    width: 100%;
+    height: 150px; /* Fixed height for consistency; adjust as needed */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-top-left-radius: 10px; /* Matches the card's border-radius */
+    border-top-right-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.feature:hover .feature-image img {
+    transform: scale(1.05); /* Slightly zooms the image on hover */
+}
+
+.feature-content {
+    padding: 1.5rem;
+}
+
+.feature-content h3 {
+    font-size: 1.5rem;
+    color: #111827; /* Primary: Dark Navy Blue for headings */
+    margin-bottom: 1rem;
+}
+
+.feature-content p {
+    color: #666; /* Slightly lighter text for contrast */
+    margin-bottom: 1.5rem;
+}
+
+/* Portfolio Section (Enhanced) */
+.portfolio {
+    padding: 4rem 2rem;
+    background-color: #fff; /* White background for contrast */
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.portfolio-item {
+    background-color: #ffffff; /* White background for each portfolio card */
+    border-radius: 10px;
+    overflow: hidden; /* Ensures image doesn't overflow the card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 220px; /* Fixed height for consistency; adjust as needed */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.portfolio-content {
+    padding: 1.5rem;
+}
+
+.portfolio-content h3 {
+    font-size: 1.5rem;
+    color: #111827; /* Primary: Dark Navy Blue for headings */
+    margin-bottom: 1rem;
+}
+
+.portfolio-content p {
+    color: #666; /* Slightly lighter text for contrast */
+    margin-bottom: 1.5rem;
+}
+
+.portfolio-cta {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* Testimonials Section (Enhanced) */
+.testimonials {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9; /* Light background for contrast */
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial {
+    background-color: #ffffff; /* White background for each testimonial card */
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial blockquote {
+    margin: 0;
+    font-style: italic;
+    color: #666; /* Slightly lighter text for contrast */
+}
+
+.testimonial cite {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    font-style: normal;
+    color: #111827; /* Primary: Dark Navy Blue for names */
+    font-weight: 500;
+}
+
+.testimonial-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    object-fit: cover;
+}
+
+/* Contact Section (Enhanced) */
+.contact {
+    padding: 4rem 2rem;
+    background-color: #fff; /* White background for contrast */
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.contact-form label {
+    display: block;
+    font-weight: 500;
+    color: #111827; /* Primary: Dark Navy Blue for labels */
+    margin-bottom: 0.5rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db; /* Hover Effects: Light Gray for borders */
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #2ecc71; /* Accent 1: Green for focus */
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+}
+
+.contact-info h3 {
+    font-size: 1.5rem;
+    color: #111827; /* Primary: Dark Navy Blue for headings */
+    margin-bottom: 1rem;
+}
+
+.contact-info p {
+    margin-bottom: 1rem;
+    color: #666; /* Slightly lighter text for contrast */
+}
+
+.contact-info a {
+    color: #2ecc71; /* Accent 1: Green for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: #6a0dad; /* Accent 2: Purple for hover effect */
+}
+
+
+/* Contact Map Styling */
+.contact-map {
+    width: 100%;
+    max-width: 600px; /* Limits the map width on larger screens for better layout control */
+    margin: 1.5rem auto 0; /* Centers the map and adds spacing above */
+    border-radius: 10px; /* Matches the rounded corners of other elements */
+    overflow: hidden; /* Ensures the iframe respects the rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+    background-color: #ffffff; /* White background for a clean look */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+/* Iframe Styling */
+.contact-map iframe {
+    width: 100%; /* Full width within the container */
+    height: 300px; /* Fixed height; matches the inline attribute */
+    border: none; /* Removes default border (already set inline, reinforced here) */
+    display: block; /* Ensures no unwanted spacing below the iframe */
+}
+
+/* Hover Effect */
+.contact-map:hover {
+    transform: translateY(-5px); /* Slight lift on hover for interactivity */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-map {
+        max-width: 100%; /* Full width on smaller screens */
+        margin: 1rem auto 0; /* Slightly reduced top margin on mobile */
+    }
+
+    .contact-map iframe {
+        height: 250px; /* Slightly smaller height on mobile for better proportionality */
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-map iframe {
+        height: 200px; /* Even smaller height on very small screens */
+    }
+}
+/* Blog Section (Optional) */
+.blog {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9; /* Light background for contrast */
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.blog-post {
+    background-color: #ffffff; /* White background for each blog card */
+    border-radius: 10px;
+    overflow: hidden; /* Ensures image doesn't overflow the card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.blog-post img {
+    width: 100%;
+    height: 200px; /* Fixed height for consistency; adjust as needed */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.blog-content {
+    padding: 1.5rem;
+}
+
+.blog-content h3 {
+    font-size: 1.5rem;
+    color: #111827; /* Primary: Dark Navy Blue for headings */
+    margin-bottom: 1rem;
+}
+
+.blog-content p {
+    color: #666; /* Slightly lighter text for contrast */
+    margin-bottom: 1.5rem;
+}
+
+.blog-cta {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* Footer */
+footer {
+    background-color: #111827; /* Primary: Dark Navy Blue */
+    color: #ffffff; /* Text: White for contrast */
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.footer-content p {
+    margin-bottom: 1rem;
+}
+
+.social-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-links a {
+    color: #ffffff; /* Text: White for contrast */
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #6a0dad; /* Accent 2: Purple for hover effect */
+}
+
+/* Screen Reader Only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: #111827; /* Primary: Dark Navy Blue for mobile menu */
+        padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 1rem 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .hero {
+        padding: 4rem 2rem;
+        min-height: 60vh;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+
+    .hero-ctas {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .feature-image img {
+        height: 120px; /* Slightly smaller height on mobile */
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+}
