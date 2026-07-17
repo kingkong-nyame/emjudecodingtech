@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}Admin Login{% endblock %}
+
+{% block extra_head %}
+<style>
+.login-page {
+  min-height: calc(100vh - 64px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 20px;
+  background: var(--bg-2);
+  position: relative;
+}
+.login-page::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 28px 28px; opacity: .5; pointer-events: none;
+}
+.login-card {
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: var(--radius-xl); padding: 40px;
+  width: 100%; max-width: 420px;
+  position: relative; z-index: 1;
+  box-shadow: var(--shadow-md);
+}
+.login-logo {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 20px; letter-spacing: -.5px;
+  color: var(--text); text-decoration: none;
+  display: block; margin-bottom: 4px;
+}
+.login-logo span { color: var(--sky-dark); }
+.login-subtitle {
+  font-size: 13px; color: var(--text-muted);
+  margin-bottom: 32px; padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.login-title { font-size: 22px; margin-bottom: 6px; }
+
+.login-btn {
+  width: 100%; padding: 13px;
+  font-size: 15px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+  background: var(--sky-dark); color: #fff;
+  border: none; border-radius: var(--radius); cursor: pointer;
+  transition: all .2s; margin-top: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.login-btn:hover { background: var(--sky-deep); transform: translateY(-1px); }
+
+.login-back {
+  display: block; text-align: center;
+  font-size: 13px; color: var(--text-muted);
+  margin-top: 20px; text-decoration: none; transition: color .2s;
+}
+.login-back:hover { color: var(--sky-dark); }
+
+.login-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: var(--sky-light); border: 1.5px solid var(--sky-mid);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin-bottom: 20px;
+}
+[data-theme="dark"] .login-icon { background: rgba(56,189,248,.12); border-color: rgba(56,189,248,.3); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-page">
+  <div class="login-card">
+
+    <div class="login-icon">🔐</div>
+
+    <a href="{{ url_for('home') }}" class="login-logo">
+      Emjude<span>Coding</span>Tech
+    </a>
+    <p class="login-subtitle">Admin Panel</p>
+
+    <h2 class="login-title">Welcome back</h2>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:28px;">
+      Sign in to manage your blog posts, projects and messages.
+    </p>
+
+    <form method="POST" action="{{ url_for('admin_login') }}">
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text" id="username" name="username"
+          placeholder="Your admin username"
+          autocomplete="username" autofocus required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password" id="password" name="password"
+          placeholder="••••••••••••"
+          autocomplete="current-password" required
+        />
+      </div>
+
+      <button type="submit" class="login-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        Sign In
+      </button>
+
+    </form>
+
+    <a href="{{ url_for('home') }}" class="login-back">← Back to website</a>
+
+  </div>
+</div>
+{% endblock %}

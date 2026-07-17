@@ -1,0 +1,78 @@
+{% extends 'admin/base.html' %}
+{% block title %}Messages{% endblock %}
+
+{% block admin_content %}
+
+<div class="admin-page-header">
+  <div>
+    <h1 class="admin-page-title">Messages</h1>
+    <p class="admin-page-sub">
+      {{ messages|length }} message{{ 's' if messages|length != 1 }}
+      {% set unread = messages | selectattr('read', 'false') | list | length %}
+      {% if unread > 0 %} · <strong style="color:var(--sky-dark);">{{ unread }} unread</strong>{% endif %}
+    </p>
+  </div>
+</div>
+
+{% if messages %}
+<div class="table-card">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>Subject</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for msg in messages %}
+      <tr style="{% if not msg.read %}font-weight:600;{% endif %}">
+        <td>
+          <div style="font-weight:{{ '700' if not msg.read else '500' }};color:var(--text);">{{ msg.name }}</div>
+          <div style="font-size:11px;color:var(--text-muted);">{{ msg.email }}</div>
+        </td>
+        <td style="max-width:220px;">
+          <span style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:210px;color:var(--text);">
+            {{ msg.subject }}
+          </span>
+        </td>
+        <td style="color:var(--text-muted);font-size:12px;">—</td>
+        <td>
+          {% if not msg.read %}
+          <span class="badge badge--unread">Unread</span>
+          {% else %}
+          <span class="badge badge--read">Read</span>
+          {% endif %}
+        </td>
+        <td style="white-space:nowrap;color:var(--text-muted);">
+          {{ msg.created_at.strftime('%b %d, %Y') }}
+        </td>
+        <td>
+          <div class="tbl-actions">
+            <a href="{{ url_for('admin_message_view', msg_id=msg.id) }}" class="tbl-btn tbl-btn--primary">Open</a>
+            <form method="POST" action="{{ url_for('admin_message_delete', msg_id=msg.id) }}"
+                  data-confirm="Delete this message from {{ msg.name }}? Cannot be undone." style="display:inline;">
+              <button type="submit" class="tbl-btn tbl-btn--danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+<div class="table-card">
+  <div class="empty-state">
+    <div class="empty-state__icon">📭</div>
+    <h3>No messages yet</h3>
+    <p>When someone sends a message through the contact form, it will appear here.</p>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

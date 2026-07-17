@@ -1,0 +1,443 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog{% endblock %}
+{% block meta_description %}Articles, tutorials and tech insights by EmjudeCodingTech — Flask, Flutter, Python, Next.js and software development tips.{% endblock %}
+
+{% block extra_head %}
+<style>
+
+/* ── Page hero ─────────────────────────────────────────────────────── */
+.page-hero {
+  padding: 72px 0 56px;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 28px 28px; opacity: .5; pointer-events: none;
+}
+.page-hero__inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; gap: 32px;
+}
+.page-hero__eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--sky-dark); margin-bottom: 14px;
+}
+.page-hero h1 { margin-bottom: 12px; }
+.page-hero__sub { font-size: 16px; color: var(--text-muted); max-width: 520px; }
+
+/* Search bar */
+.search-form {
+  display: flex; gap: 0;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.search-form:focus-within { border-color: var(--sky-dark); }
+.search-input {
+  border: none !important; border-radius: 0 !important;
+  padding: 11px 16px !important; width: 240px;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 14px;
+}
+.search-btn {
+  padding: 0 16px; background: var(--sky-dark); border: none;
+  color: #fff; cursor: pointer; transition: background .2s;
+  display: flex; align-items: center;
+}
+.search-btn:hover { background: var(--sky-deep); }
+
+/* ── Layout ────────────────────────────────────────────────────────── */
+.blog-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ── Category filter chips ─────────────────────────────────────────── */
+.cat-chips {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+}
+.cat-chip {
+  font-size: 12px; font-weight: 600;
+  padding: 6px 16px; border-radius: 99px;
+  border: 1.5px solid var(--border);
+  color: var(--text-muted); background: transparent;
+  text-decoration: none; transition: all .2s;
+}
+.cat-chip:hover  { border-color: var(--sky-dark); color: var(--sky-dark); }
+.cat-chip.active {
+  background: var(--sky-dark); border-color: var(--sky-dark); color: #fff;
+}
+
+/* ── Blog card ─────────────────────────────────────────────────────── */
+.blog-cards { display: flex; flex-direction: column; gap: 24px; }
+
+.blog-card {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: grid; grid-template-columns: 1fr auto;
+  transition: all .25s;
+}
+.blog-card:hover {
+  border-color: var(--sky-mid);
+  box-shadow: var(--shadow-sky);
+  transform: translateY(-3px);
+}
+
+.blog-card__body { padding: 28px; }
+.blog-card__meta {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px; flex-wrap: wrap;
+}
+.blog-cat-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: .6px;
+  text-transform: uppercase; padding: 3px 10px; border-radius: 99px;
+  background: var(--sky-light); color: var(--sky-dark);
+}
+[data-theme="dark"] .blog-cat-badge {
+  background: rgba(56,189,248,.15); color: var(--sky-mid);
+}
+.blog-meta-dot { color: var(--border-2); font-size: 10px; }
+.blog-date { font-size: 12px; color: var(--text-muted); }
+.blog-read-time { font-size: 12px; color: var(--text-muted); }
+
+.blog-card__title {
+  font-family: 'Syne', sans-serif;
+  font-size: 19px; font-weight: 800; letter-spacing: -.03em;
+  color: var(--text); line-height: 1.25; margin-bottom: 10px;
+  display: block; transition: color .2s;
+}
+.blog-card__title:hover { color: var(--sky-dark); }
+.blog-card__excerpt {
+  font-size: 14px; color: var(--text-muted);
+  line-height: 1.7; margin-bottom: 16px;
+}
+.blog-card__tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.blog-card__arrow {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 28px; border-left: 1px solid var(--border);
+  color: var(--text-muted); transition: color .2s;
+  flex-shrink: 0;
+}
+.blog-card:hover .blog-card__arrow { color: var(--sky-dark); }
+
+/* ── Pagination ────────────────────────────────────────────────────── */
+.pagination {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 40px; flex-wrap: wrap;
+}
+.page-link {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 8px;
+  font-size: 13px; font-weight: 600;
+  border: 1.5px solid var(--border);
+  color: var(--text-muted); text-decoration: none;
+  transition: all .2s;
+}
+.page-link:hover  { border-color: var(--sky-dark); color: var(--sky-dark); }
+.page-link.active { background: var(--sky-dark); border-color: var(--sky-dark); color: #fff; }
+.page-link.disabled { opacity: .4; pointer-events: none; }
+
+/* ── Empty state ───────────────────────────────────────────────────── */
+.blog-empty {
+  text-align: center; padding: 80px 32px;
+  border: 1.5px dashed var(--border); border-radius: var(--radius-xl);
+}
+.blog-empty__icon { font-size: 48px; margin-bottom: 16px; }
+.blog-empty h3 { font-size: 20px; margin-bottom: 8px; }
+.blog-empty p  { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+
+/* ── Sidebar ───────────────────────────────────────────────────────── */
+.sidebar { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 84px; }
+
+.sidebar-card {
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+}
+.sidebar-card__title {
+  font-size: 12px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* About widget */
+.sidebar-about {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+}
+.sidebar-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--sky-dark), var(--sky-mid));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px;
+  color: #fff; flex-shrink: 0;
+}
+.sidebar-about__name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.sidebar-about__role { font-size: 12px; color: var(--text-muted); }
+.sidebar-about__bio  { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+/* Categories list */
+.sidebar-cat-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-size: 13px; text-decoration: none; color: var(--text-2);
+  transition: color .2s;
+}
+.sidebar-cat-item:last-child { border-bottom: none; padding-bottom: 0; }
+.sidebar-cat-item:hover { color: var(--sky-dark); }
+.sidebar-cat-count {
+  font-size: 11px; font-weight: 700;
+  background: var(--bg-3); color: var(--text-muted);
+  padding: 2px 8px; border-radius: 99px;
+}
+
+/* CTA card */
+.sidebar-cta {
+  background: var(--sky-dark) !important;
+  border-color: var(--sky-dark) !important;
+  text-align: center;
+}
+.sidebar-cta .sidebar-card__title { color: rgba(255,255,255,.6); border-bottom-color: rgba(255,255,255,.15); }
+.sidebar-cta h4 { color: #fff; font-size: 16px; margin-bottom: 8px; }
+.sidebar-cta p  { font-size: 13px; color: rgba(255,255,255,.7); margin-bottom: 16px; }
+.btn-white-sm {
+  display: inline-block; font-size: 13px; font-weight: 700;
+  padding: 9px 20px; border-radius: 8px;
+  background: #fff; color: var(--sky-dark); border: none;
+  transition: all .2s;
+}
+.btn-white-sm:hover { background: var(--sky-light); transform: translateY(-1px); }
+
+/* ── Reveal ────────────────────────────────────────────────────────── */
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .55s ease, transform .55s ease; }
+[data-reveal].revealed { opacity: 1; transform: none; }
+[data-reveal-delay="1"] { transition-delay: .1s; }
+[data-reveal-delay="2"] { transition-delay: .2s; }
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .page-hero__inner { grid-template-columns: 1fr; }
+  .blog-layout      { grid-template-columns: 1fr; }
+  .sidebar          { position: static; }
+  .blog-card        { grid-template-columns: 1fr; }
+  .blog-card__arrow { display: none; }
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+{# ════════════════ PAGE HERO ══════════════════════════════════════════ #}
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <div>
+        <p class="page-hero__eyebrow">The Blog</p>
+        <h1>Articles &amp; <span class="highlight">Tutorials</span></h1>
+        <p class="page-hero__sub">
+          Tech tips, tutorials and thoughts on Flask, Flutter, Python, Next.js
+          and building software that works.
+        </p>
+      </div>
+
+      <form class="search-form" method="GET" action="{{ url_for('blog') }}">
+        <input
+          class="search-input"
+          type="text" name="q"
+          placeholder="Search articles…"
+          value="{{ search_query }}"
+          aria-label="Search posts"
+        />
+        <button class="search-btn" type="submit" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+{# ════════════════ MAIN CONTENT ═══════════════════════════════════════ #}
+<section class="section">
+  <div class="container">
+    <div class="blog-layout">
+
+      {# ── Main column ── #}
+      <div>
+
+        {# Category chips #}
+        <div class="cat-chips" data-reveal>
+          <a href="{{ url_for('blog') }}"
+             class="cat-chip {% if not active_category %}active{% endif %}">
+            All posts
+          </a>
+          {% for cat in categories %}
+          <a href="{{ url_for('blog', category=cat) }}"
+             class="cat-chip {% if active_category == cat %}active{% endif %}">
+            {{ cat }}
+          </a>
+          {% endfor %}
+        </div>
+
+        {# Search / filter context line #}
+        {% if search_query %}
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:24px;">
+          Results for <strong style="color:var(--text);">"{{ search_query }}"</strong>
+          — {{ posts.total }} post{{ 's' if posts.total != 1 }}
+          · <a href="{{ url_for('blog') }}" style="color:var(--sky-dark);">Clear</a>
+        </p>
+        {% elif active_category %}
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:24px;">
+          Showing <strong style="color:var(--text);">{{ active_category }}</strong>
+          — {{ posts.total }} post{{ 's' if posts.total != 1 }}
+        </p>
+        {% endif %}
+
+        {# Posts list #}
+        {% if posts.items %}
+          <div class="blog-cards">
+            {% for post in posts.items %}
+            <article class="blog-card" data-reveal data-reveal-delay="{{ loop.index % 2 }}">
+              <div class="blog-card__body">
+                <div class="blog-card__meta">
+                  <span class="blog-cat-badge">{{ post.category }}</span>
+                  <span class="blog-meta-dot">•</span>
+                  <span class="blog-date">{{ post.created_at.strftime('%b %d, %Y') }}</span>
+                  <span class="blog-meta-dot">•</span>
+                  <span class="blog-read-time">{{ post.read_time }}</span>
+                </div>
+
+                <a href="{{ url_for('blog_post', slug=post.slug) }}" class="blog-card__title">
+                  {{ post.title }}
+                </a>
+
+                <p class="blog-card__excerpt">
+                  {{ post.excerpt[:150] }}{% if post.excerpt|length > 150 %}…{% endif %}
+                </p>
+
+                {% if post.tag_list %}
+                <div class="blog-card__tags">
+                  {% for tag in post.tag_list[:4] %}
+                  <span class="tag">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+                {% endif %}
+              </div>
+
+              <a href="{{ url_for('blog_post', slug=post.slug) }}" class="blog-card__arrow" aria-label="Read {{ post.title }}">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </article>
+            {% endfor %}
+          </div>
+
+          {# Pagination #}
+          {% if posts.pages > 1 %}
+          <nav class="pagination" aria-label="Blog pages">
+            <a href="{{ url_for('blog', page=posts.prev_num, category=active_category, q=search_query) if posts.has_prev else '#' }}"
+               class="page-link {% if not posts.has_prev %}disabled{% endif %}" aria-label="Previous">
+              ←
+            </a>
+
+            {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+              {% if page_num %}
+                <a href="{{ url_for('blog', page=page_num, category=active_category, q=search_query) }}"
+                   class="page-link {% if page_num == posts.page %}active{% endif %}">
+                  {{ page_num }}
+                </a>
+              {% else %}
+                <span class="page-link disabled" style="border:none;">…</span>
+              {% endif %}
+            {% endfor %}
+
+            <a href="{{ url_for('blog', page=posts.next_num, category=active_category, q=search_query) if posts.has_next else '#' }}"
+               class="page-link {% if not posts.has_next %}disabled{% endif %}" aria-label="Next">
+              →
+            </a>
+          </nav>
+          {% endif %}
+
+        {% else %}
+          <div class="blog-empty" data-reveal>
+            <div class="blog-empty__icon">✍️</div>
+            {% if search_query %}
+              <h3>No results for "{{ search_query }}"</h3>
+              <p>Try a different search term or browse all posts.</p>
+              <a href="{{ url_for('blog') }}" class="btn btn-primary">Browse All Posts</a>
+            {% elif active_category %}
+              <h3>No posts in "{{ active_category }}" yet</h3>
+              <p>Check back soon — more articles are on the way.</p>
+              <a href="{{ url_for('blog') }}" class="btn btn-primary">See All Posts</a>
+            {% else %}
+              <h3>No articles yet</h3>
+              <p>The blog is coming soon. First post is being written.</p>
+              <a href="{{ url_for('admin_post_new') }}" class="btn btn-primary">Write First Post →</a>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      </div>
+
+      {# ── Sidebar ── #}
+      <aside class="sidebar">
+
+        {# About widget #}
+        <div class="sidebar-card">
+          <div class="sidebar-card__title">About the author</div>
+          <div class="sidebar-about">
+            <div class="sidebar-avatar">EJ</div>
+            <div>
+              <div class="sidebar-about__name">Emmanuel</div>
+              <div class="sidebar-about__role">Software Developer · Ghana 🇬🇭</div>
+            </div>
+          </div>
+          <p class="sidebar-about__bio">
+            I write about Flask, Flutter, Python, Next.js and the lessons I learn
+            building real software for clients.
+          </p>
+        </div>
+
+        {# Categories #}
+        {% if categories %}
+        <div class="sidebar-card">
+          <div class="sidebar-card__title">Categories</div>
+          {% for cat in categories %}
+          <a href="{{ url_for('blog', category=cat) }}" class="sidebar-cat-item">
+            {{ cat }}
+            <span class="sidebar-cat-count">
+              {{ posts.total if active_category == cat else '' }}
+            </span>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {# CTA #}
+        <div class="sidebar-card sidebar-cta">
+          <div class="sidebar-card__title">Work together</div>
+          <h4>Got a project?</h4>
+          <p>I'm available for new web and mobile projects.</p>
+          <a href="{{ url_for('contact') }}" class="btn-white-sm">Get In Touch</a>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

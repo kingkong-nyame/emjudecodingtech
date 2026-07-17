@@ -1,0 +1,172 @@
+{% extends 'admin/base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block admin_content %}
+
+<div class="admin-page-header">
+  <div>
+    <h1 class="admin-page-title">Dashboard</h1>
+    <p class="admin-page-sub">Welcome back, {{ current_user.username }}. Here's what's happening.</p>
+  </div>
+  <a href="{{ url_for('admin_post_new') }}" class="btn btn-primary btn-sm">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    New Post
+  </a>
+</div>
+
+{# ── Stat cards ── #}
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-card__icon">📝</div>
+    <div class="stat-card__num">{{ stats.posts }}<span class="accent"> total</span></div>
+    <div class="stat-card__label">Blog posts · {{ stats.published }} published</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card__icon">🚀</div>
+    <div class="stat-card__num">{{ stats.projects }}</div>
+    <div class="stat-card__label">Portfolio projects</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card__icon">📬</div>
+    <div class="stat-card__num">
+      {{ stats.messages }}
+      {% if stats.unread > 0 %}
+      <span class="accent" style="font-size:16px;"> · {{ stats.unread }} new</span>
+      {% endif %}
+    </div>
+    <div class="stat-card__label">Contact messages</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card__icon">📊</div>
+    <div class="stat-card__num">{{ stats.published }}<span class="accent">/{{ stats.posts }}</span></div>
+    <div class="stat-card__label">Posts published</div>
+  </div>
+</div>
+
+{# ── Quick actions ── #}
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;">
+  <a href="{{ url_for('admin_post_new') }}" class="tbl-btn tbl-btn--primary">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    New Blog Post
+  </a>
+  <a href="{{ url_for('admin_project_new') }}" class="tbl-btn tbl-btn--primary">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add Project
+  </a>
+  <a href="{{ url_for('admin_messages') }}" class="tbl-btn">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    View Messages
+    {% if stats.unread > 0 %}<span style="background:var(--sky-dark);color:#fff;font-size:10px;padding:1px 6px;border-radius:99px;">{{ stats.unread }}</span>{% endif %}
+  </a>
+  <a href="{{ url_for('home') }}" target="_blank" class="tbl-btn">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+    View Live Site
+  </a>
+</div>
+
+{# ── Two column: recent messages + recent posts ── #}
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+
+  {# Recent messages #}
+  <div class="table-card">
+    <div class="table-card__header">
+      <span class="table-card__title">
+        Recent Messages
+        {% if stats.unread > 0 %}
+        <span style="background:var(--sky-dark);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:8px;">{{ stats.unread }} unread</span>
+        {% endif %}
+      </span>
+      <a href="{{ url_for('admin_messages') }}" class="tbl-btn btn-sm">View all</a>
+    </div>
+
+    {% if recent_messages %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>From</th>
+          <th>Subject</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for msg in recent_messages %}
+        <tr>
+          <td>
+            <div style="font-weight:600;color:var(--text);">{{ msg.name }}</div>
+            <div style="font-size:11px;color:var(--text-muted);">{{ msg.created_at.strftime('%b %d') }}</div>
+          </td>
+          <td style="max-width:160px;">
+            <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;max-width:150px;">{{ msg.subject }}</span>
+          </td>
+          <td>
+            {% if not msg.read %}
+            <span class="badge badge--unread">New</span>
+            {% else %}
+            <span class="badge badge--read">Read</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('admin_message_view', msg_id=msg.id) }}" class="tbl-btn">Open</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state" style="padding:40px;">
+      <div class="empty-state__icon">📭</div>
+      <p style="color:var(--text-muted);font-size:13px;">No messages yet.</p>
+    </div>
+    {% endif %}
+  </div>
+
+  {# Recent posts #}
+  <div class="table-card">
+    <div class="table-card__header">
+      <span class="table-card__title">Recent Posts</span>
+      <a href="{{ url_for('admin_posts') }}" class="tbl-btn">View all</a>
+    </div>
+
+    {% if recent_posts %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in recent_posts %}
+        <tr>
+          <td>
+            <div style="font-weight:600;color:var(--text);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ post.title }}</div>
+            <div style="font-size:11px;color:var(--text-muted);">{{ post.category }} · {{ post.created_at.strftime('%b %d') }}</div>
+          </td>
+          <td>
+            {% if post.published %}
+            <span class="badge badge--published">Published</span>
+            {% else %}
+            <span class="badge badge--draft">Draft</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('admin_post_edit', post_id=post.id) }}" class="tbl-btn">Edit</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state" style="padding:40px;">
+      <div class="empty-state__icon">✍️</div>
+      <p style="color:var(--text-muted);font-size:13px;">No posts yet.</p>
+      <a href="{{ url_for('admin_post_new') }}" class="tbl-btn tbl-btn--primary" style="margin-top:8px;">Write first post</a>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}

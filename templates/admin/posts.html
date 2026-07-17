@@ -1,0 +1,82 @@
+{% extends 'admin/base.html' %}
+{% block title %}Blog Posts{% endblock %}
+
+{% block admin_content %}
+
+<div class="admin-page-header">
+  <div>
+    <h1 class="admin-page-title">Blog Posts</h1>
+    <p class="admin-page-sub">{{ posts|length }} post{{ 's' if posts|length != 1 }} total</p>
+  </div>
+  <a href="{{ url_for('admin_post_new') }}" class="btn btn-primary btn-sm">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    New Post
+  </a>
+</div>
+
+{% if posts %}
+<div class="table-card">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Read time</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td>
+          <div style="font-weight:600;color:var(--text);">{{ post.title }}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">
+            /blog/{{ post.slug }}
+          </div>
+        </td>
+        <td>{{ post.category }}</td>
+        <td>{{ post.read_time }}</td>
+        <td>
+          {% if post.published %}
+          <span class="badge badge--published">Published</span>
+          {% else %}
+          <span class="badge badge--draft">Draft</span>
+          {% endif %}
+        </td>
+        <td style="white-space:nowrap;color:var(--text-muted);">
+          {{ post.created_at.strftime('%b %d, %Y') }}
+        </td>
+        <td>
+          <div class="tbl-actions">
+            {% if post.published %}
+            <a href="{{ url_for('blog_post', slug=post.slug) }}" target="_blank" class="tbl-btn" title="View live post">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            {% endif %}
+            <a href="{{ url_for('admin_post_edit', post_id=post.id) }}" class="tbl-btn">Edit</a>
+            <form method="POST" action="{{ url_for('admin_post_delete', post_id=post.id) }}"
+                  data-confirm="Delete '{{ post.title }}'? This cannot be undone." style="display:inline;">
+              <button type="submit" class="tbl-btn tbl-btn--danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+<div class="table-card">
+  <div class="empty-state">
+    <div class="empty-state__icon">✍️</div>
+    <h3>No posts yet</h3>
+    <p>Write your first article to share your knowledge.</p>
+    <a href="{{ url_for('admin_post_new') }}" class="btn btn-primary">Write First Post</a>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

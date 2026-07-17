@@ -1,0 +1,186 @@
+{% extends 'admin/base.html' %}
+{% block title %}{{ 'Edit Project' if project else 'Add Project' }}{% endblock %}
+
+{% block admin_content %}
+
+<div class="admin-page-header">
+  <div>
+    <h1 class="admin-page-title">{{ 'Edit Project' if project else 'Add Project' }}</h1>
+    <p class="admin-page-sub">
+      {% if project %}Editing "{{ project.title }}"{% else %}Add a new project to your portfolio{% endif %}
+    </p>
+  </div>
+  <a href="{{ url_for('admin_projects') }}" class="tbl-btn">← Back to Projects</a>
+</div>
+
+<form method="POST"
+      action="{{ url_for('admin_project_edit', proj_id=project.id) if project else url_for('admin_project_new') }}">
+
+  <div style="display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:start;">
+
+    {# ── Main fields ── #}
+    <div class="admin-form-card">
+
+      <div class="form-group">
+        <label for="title">Project Title <span style="color:var(--sky-dark);">*</span></label>
+        <input type="text" id="title" name="title"
+               placeholder="e.g. AllNewUsed — Vehicle Marketplace"
+               value="{{ project.title if project else form.get('title','') }}"
+               required autofocus />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description <span style="color:var(--sky-dark);">*</span></label>
+        <textarea id="description" name="description" rows="4"
+                  placeholder="Describe what the project does, who it's for and the problem it solves…"
+                  required>{{ project.description if project else form.get('description','') }}</textarea>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category">
+            {% for cat in ['Web', 'Mobile', 'API', 'Desktop', 'Other'] %}
+            <option value="{{ cat }}"
+              {% if project and project.category == cat %}selected
+              {% elif form.get('category') == cat %}selected{% endif %}>
+              {{ cat }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="tech_stack">Tech Stack</label>
+          <input type="text" id="tech_stack" name="tech_stack"
+                 placeholder="Python, Flask, SQLite, HTML/CSS"
+                 value="{{ project.tech_stack if project else form.get('tech_stack','') }}" />
+          <p class="field-hint">Comma-separated list of technologies used.</p>
+        </div>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="live_url">Live URL</label>
+          <input type="url" id="live_url" name="live_url"
+                 placeholder="https://yourproject.com"
+                 value="{{ project.live_url if project else form.get('live_url','') }}" />
+        </div>
+
+        <div class="form-group">
+          <label for="github_url">GitHub URL</label>
+          <input type="url" id="github_url" name="github_url"
+                 placeholder="https://github.com/kingkong-nyame/..."
+                 value="{{ project.github_url if project else form.get('github_url','') }}" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="image_url">Image / Screenshot URL</label>
+        <input type="url" id="image_url" name="image_url"
+               placeholder="https://... (optional — leave blank to use default icon)"
+               value="{{ project.image_url if project else form.get('image_url','') }}" />
+        <p class="field-hint">Link to a screenshot or preview image. Ideal size: 1200×630px.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="highlights">Project Highlights</label>
+        <textarea id="highlights" name="highlights" rows="6"
+                  placeholder="One bullet per line, e.g.&#10;Vehicle listings with filters&#10;Verified dealer accounts&#10;3,257+ active listings">{{ project.highlights if project else form.get('highlights','') }}</textarea>
+        <p class="field-hint">One highlight per line. Shown as ✓-bulleted feature list on the portfolio card.</p>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="icon">Card Icon (emoji)</label>
+          <input type="text" id="icon" name="icon" maxlength="6"
+                 placeholder="🚀"
+                 value="{{ project.icon if project else form.get('icon','🚀') }}" />
+          <p class="field-hint">A single emoji shown on the card thumbnail.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="thumb_color">Thumbnail Color</label>
+          <select id="thumb_color" name="thumb_color">
+            {% set colors = [
+              ('default',     'Default (sky blue)'),
+              ('marketplace', 'Marketplace (deep blue)'),
+              ('jobs',        'Jobs (indigo)'),
+              ('medical',     'Medical (green)'),
+              ('ecommerce',   'E-commerce (amber)'),
+              ('law',         'Law (slate)'),
+            ] %}
+            {% for key, label in colors %}
+            <option value="{{ key }}"
+              {% if project and project.thumb_color == key %}selected
+              {% elif form.get('thumb_color') == key %}selected
+              {% elif not project and not form.get('thumb_color') and key == 'default' %}selected{% endif %}>
+              {{ label }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="category_label">Category Label (optional)</label>
+        <input type="text" id="category_label" name="category_label"
+               placeholder="e.g. Web · Marketplace"
+               value="{{ project.category_label if project else form.get('category_label','') }}" />
+        <p class="field-hint">Overrides the plain Category text on the card thumb. Leave blank to use Category.</p>
+      </div>
+
+    </div>
+
+    {# ── Sidebar settings ── #}
+    <div style="display:flex;flex-direction:column;gap:16px;position:sticky;top:80px;">
+
+      <div class="admin-form-card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:16px;">Display Settings</div>
+
+        <div class="form-group">
+          <label class="form-check" style="cursor:pointer;">
+            <input type="checkbox" name="featured" value="1"
+              {% if project and project.featured %}checked
+              {% elif form.get('featured') %}checked{% endif %} />
+            Mark as Featured
+          </label>
+          <p class="field-hint">Featured projects appear on the homepage.</p>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="order">Display Order</label>
+          <input type="number" id="order" name="order" min="0" max="99"
+                 placeholder="0"
+                 value="{{ project.order if project else form.get('order', 0) }}" />
+          <p class="field-hint">Lower numbers appear first. 0 = default.</p>
+        </div>
+      </div>
+
+      <div class="admin-form-card">
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          {{ 'Save Changes' if project else 'Add Project' }}
+        </button>
+        <a href="{{ url_for('admin_projects') }}" class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:8px;">
+          Cancel
+        </a>
+      </div>
+
+      {% if project and project.live_url %}
+      <div class="admin-form-card" style="background:var(--sky-light);border-color:var(--sky-mid);">
+        <div style="font-size:12px;font-weight:700;color:var(--sky-dark);margin-bottom:8px;">Live Site</div>
+        <a href="{{ project.live_url }}" target="_blank"
+           style="font-size:13px;color:var(--sky-dark);display:flex;align-items:center;gap:6px;word-break:break-all;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          {{ project.live_url | replace('https://', '') }}
+        </a>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+</form>
+
+{% endblock %}

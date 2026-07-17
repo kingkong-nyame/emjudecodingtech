@@ -1,0 +1,741 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+{% block meta_description %}Emmanuel — software developer specialising in Flask, Flutter, Next.js, C# and Python. Available for web, mobile and API projects.{% endblock %}
+
+{% block extra_head %}
+<style>
+/* ── Hero ─────────────────────────────────────────────────────────── */
+.hero {
+  padding: 96px 0 80px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* subtle grid dot background */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: .55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+/* left column */
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sky-dark);
+  background: var(--sky-light);
+  border: 1px solid var(--sky-mid);
+  border-radius: 99px;
+  padding: 5px 14px;
+  letter-spacing: .5px;
+  margin-bottom: 24px;
+}
+[data-theme="dark"] .hero__eyebrow {
+  background: rgba(56,189,248,.12);
+  border-color: rgba(56,189,248,.3);
+}
+
+.hero__title {
+  margin-bottom: 16px;
+}
+.hero__title .line-2 { color: var(--sky-dark); display: block; }
+
+.hero__typing {
+  font-size: 17px;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px; height: 20px;
+  background: var(--sky-dark);
+  border-radius: 1px;
+  animation: blink .7s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.hero__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.hero__stack-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.hero__stack-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.stack-pill {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: 1.5px solid var(--border);
+  color: var(--text-2);
+  transition: all .2s;
+}
+.stack-pill:hover {
+  border-color: var(--sky-dark);
+  color: var(--sky-dark);
+  background: var(--sky-light);
+}
+
+/* right column: code card */
+.hero__code-card {
+  background: #0d1117;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,.25);
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.9;
+}
+.code-card__bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 14px 18px;
+  background: #161b22;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.code-dot { width: 11px; height: 11px; border-radius: 50%; }
+.code-dot--r { background: #ff5f56; }
+.code-dot--y { background: #ffbd2e; }
+.code-dot--g { background: #27c93f; }
+.code-card__filename {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,.35);
+  margin-left: auto;
+}
+.code-card__body { padding: 20px 24px; }
+.code-line { display: flex; gap: 16px; }
+.ln  { color: rgba(255,255,255,.18); width: 18px; text-align: right; flex-shrink: 0; user-select: none; }
+.kw  { color: #ff7b72; }
+.fn  { color: #d2a8ff; }
+.str { color: #a5d6ff; }
+.cm  { color: rgba(255,255,255,.28); font-style: italic; }
+.op  { color: #79c0ff; }
+.nt  { color: #7ee787; }
+.blank { height: 10px; }
+
+/* ── Stats strip ──────────────────────────────────────────────────── */
+.stats-strip {
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stats-strip__inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.stat-item {
+  padding: 28px 32px;
+  border-right: 1px solid var(--border);
+  transition: background .2s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: var(--bg-3); }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+.stat-num span { color: var(--sky-dark); }
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* ── Services preview ─────────────────────────────────────────────── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.svc-card {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  transition: all .25s;
+}
+.svc-card:hover {
+  border-color: var(--sky-mid);
+  box-shadow: var(--shadow-sky);
+  transform: translateY(-4px);
+}
+.svc-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+.svc-icon--web    { background: var(--sky-light); }
+.svc-icon--mobile { background: #fce7f3; }
+.svc-icon--api    { background: #f0fdf4; }
+.svc-icon--dot    { background: #ede9fe; }
+[data-theme="dark"] .svc-icon--web    { background: rgba(56,189,248,.12); }
+[data-theme="dark"] .svc-icon--mobile { background: rgba(244,114,182,.1); }
+[data-theme="dark"] .svc-icon--api    { background: rgba(34,197,94,.1); }
+[data-theme="dark"] .svc-icon--dot    { background: rgba(167,139,250,.1); }
+
+.svc-title { font-size: 16px; margin-bottom: 8px; }
+.svc-desc  { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+.svc-tags  { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ── Portfolio strip (dark) ───────────────────────────────────────── */
+.portfolio-dark {
+  background: var(--text);
+  padding: 80px 0;
+}
+[data-theme="dark"] .portfolio-dark { background: #020617; }
+
+.portfolio-dark .section-tag  { color: var(--sky-mid); }
+.portfolio-dark .section-title { color: #fff; }
+.portfolio-dark .see-all { color: var(--sky-mid); }
+.portfolio-dark .see-all:hover { color: var(--sky); }
+
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.proj-card {
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  background: rgba(255,255,255,.03);
+  transition: all .25s;
+}
+.proj-card:hover {
+  border-color: rgba(125,211,252,.35);
+  background: rgba(56,189,248,.05);
+  transform: translateY(-3px);
+}
+
+.proj-empty {
+  border: 1.5px dashed rgba(255,255,255,.12);
+  border-radius: var(--radius-lg);
+  padding: 48px 28px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px;
+  color: rgba(255,255,255,.25);
+  font-size: 14px;
+  text-align: center;
+}
+.proj-empty a { color: var(--sky-mid); }
+
+.proj-lang {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 99px;
+  background: rgba(56,189,248,.15);
+  color: var(--sky-mid);
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.proj-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  letter-spacing: -.03em;
+}
+.proj-desc { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.6; }
+.proj-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.proj-stack { display: flex; gap: 6px; flex-wrap: wrap; }
+.proj-stack span {
+  font-size: 11px;
+  color: rgba(255,255,255,.35);
+  background: rgba(255,255,255,.05);
+  padding: 3px 9px;
+  border-radius: 99px;
+}
+.proj-link {
+  font-size: 13px;
+  color: var(--sky-mid);
+  font-weight: 600;
+  display: flex; align-items: center; gap: 4px;
+  transition: color .2s;
+}
+.proj-link:hover { color: var(--sky); }
+
+/* ── Blog preview ─────────────────────────────────────────────────── */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.blog-card {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all .25s;
+}
+.blog-card:hover {
+  border-color: var(--sky-mid);
+  box-shadow: var(--shadow-sky);
+  transform: translateY(-3px);
+}
+.blog-card__body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.blog-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.blog-cat {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sky-dark);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+}
+.blog-date { font-size: 12px; color: var(--text-muted); }
+.blog-card__title {
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: var(--text);
+  line-height: 1.4;
+  flex: 1;
+}
+.blog-card__title:hover { color: var(--sky-dark); }
+.blog-card__excerpt { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.blog-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.blog-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px;
+  color: var(--text-muted);
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-lg);
+}
+.blog-empty a { color: var(--sky-dark); font-weight: 500; }
+
+/* ── CTA band ─────────────────────────────────────────────────────── */
+.cta-band {
+  background: var(--sky-dark);
+  padding: 72px 0;
+  position: relative;
+  overflow: hidden;
+}
+.cta-band::before {
+  content: '';
+  position: absolute;
+  right: -100px; top: -100px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  pointer-events: none;
+}
+.cta-band::after {
+  content: '';
+  position: absolute;
+  left: -60px; bottom: -80px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  pointer-events: none;
+}
+.cta-band__inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.cta-band h2 { color: #fff; margin-bottom: 12px; }
+.cta-band p  { color: rgba(255,255,255,.75); font-size: 16px; margin-bottom: 32px; }
+.cta-band .btn-white {
+  background: #fff;
+  color: var(--sky-dark);
+  border: none;
+  font-weight: 700;
+}
+.cta-band .btn-white:hover {
+  background: var(--sky-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+}
+.cta-band .btn-outline-white {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,.5);
+  font-weight: 600;
+}
+.cta-band .btn-outline-white:hover {
+  border-color: #fff;
+  background: rgba(255,255,255,.08);
+}
+
+/* ── data-reveal animations ───────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+[data-reveal-delay="1"] { transition-delay: .1s; }
+[data-reveal-delay="2"] { transition-delay: .2s; }
+[data-reveal-delay="3"] { transition-delay: .3s; }
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero__inner          { grid-template-columns: 1fr; gap: 48px; }
+  .hero__code-card      { display: none; }
+  .services-grid        { grid-template-columns: 1fr; }
+  .proj-grid            { grid-template-columns: 1fr; }
+  .blog-grid            { grid-template-columns: 1fr; }
+  .stats-strip__inner   { grid-template-columns: repeat(2, 1fr); }
+  .stat-item:nth-child(2) { border-right: none; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 64px 0 56px; }
+  .stats-strip__inner { grid-template-columns: 1fr 1fr; }
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+{# ═══════════════════ HERO ═══════════════════════════════════════════ #}
+<section class="hero">
+  <div class="container">
+    <div class="hero__inner">
+
+      {# Left column #}
+      <div>
+        <div class="hero__eyebrow">
+          <span>👋</span> Hey, I'm Emmanuel
+        </div>
+
+        <h1 class="hero__title">
+          I Build Software<br>
+          <span class="line-2">That Works.</span>
+        </h1>
+
+        <div class="hero__typing">
+          <span id="typed-text">Full-stack web developer</span>
+          <span class="cursor" aria-hidden="true"></span>
+        </div>
+
+        <div class="hero__actions">
+          <a href="{{ url_for('portfolio') }}" class="btn btn-primary">
+            View My Work
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+          <a href="{{ url_for('contact') }}" class="btn btn-secondary">Let's Talk</a>
+          <a href="{{ url_for('static', filename='files/Emmanuel-Nti-Gyimah-CV.pdf') }}"
+             class="btn btn-secondary" download="Emmanuel-Nti-Gyimah-CV.pdf">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download CV
+          </a>
+        </div>
+
+        <p class="hero__stack-label">My tech stack</p>
+        <div class="hero__stack-pills">
+          <span class="stack-pill">Python</span>
+          <span class="stack-pill">Flask</span>
+          <span class="stack-pill">Flutter</span>
+          <span class="stack-pill">Dart</span>
+          <span class="stack-pill">Next.js</span>
+          <span class="stack-pill">C#</span>
+          <span class="stack-pill">.NET</span>
+          <span class="stack-pill">HTML/CSS/JS</span>
+        </div>
+      </div>
+
+      {# Right column: code card #}
+      <div>
+        <div class="hero__code-card" aria-hidden="true">
+          <div class="code-card__bar">
+            <span class="code-dot code-dot--r"></span>
+            <span class="code-dot code-dot--y"></span>
+            <span class="code-dot code-dot--g"></span>
+            <span class="code-card__filename">app.py — EmjudeCodingTech</span>
+          </div>
+          <div class="code-card__body">
+            <div class="code-line"><span class="ln">1</span><span><span class="kw">from</span> flask <span class="kw">import</span> Flask, render_template</span></div>
+            <div class="code-line"><span class="ln">2</span><span><span class="kw">from</span> models <span class="kw">import</span> db, Project, Post</span></div>
+            <div class="blank"></div>
+            <div class="code-line"><span class="ln">4</span><span>app = <span class="fn">Flask</span>(__name__)</span></div>
+            <div class="blank"></div>
+            <div class="code-line"><span class="ln">6</span><span class="cm"># ── Emmanuel — Software Developer ──</span></div>
+            <div class="code-line"><span class="ln">7</span><span class="cm"># Skills: Python · Flutter · Next.js · C#</span></div>
+            <div class="blank"></div>
+            <div class="code-line"><span class="ln">9</span><span><span class="op">@</span>app.<span class="fn">route</span>(<span class="str">'/'</span>)</span></div>
+            <div class="code-line"><span class="ln">10</span><span><span class="kw">def</span> <span class="fn">home</span>():</span></div>
+            <div class="code-line"><span class="ln">11</span><span>&nbsp;&nbsp;projects = <span class="nt">Project</span>.query.<span class="fn">filter_by</span>(</span></div>
+            <div class="code-line"><span class="ln">12</span><span>&nbsp;&nbsp;&nbsp;&nbsp;featured=<span class="op">True</span></span></div>
+            <div class="code-line"><span class="ln">13</span><span>&nbsp;&nbsp;).<span class="fn">all</span>()</span></div>
+            <div class="code-line"><span class="ln">14</span><span>&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">render_template</span>(</span></div>
+            <div class="code-line"><span class="ln">15</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">'index.html'</span>,</span></div>
+            <div class="code-line"><span class="ln">16</span><span>&nbsp;&nbsp;&nbsp;&nbsp;projects=projects</span></div>
+            <div class="code-line"><span class="ln">17</span><span>&nbsp;&nbsp;)</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+{# ═══════════════════ STATS STRIP ════════════════════════════════════ #}
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-strip__inner">
+      <div class="stat-item" data-reveal>
+        <div class="stat-num">10<span>+</span></div>
+        <div class="stat-label">Projects delivered</div>
+      </div>
+      <div class="stat-item" data-reveal data-reveal-delay="1">
+        <div class="stat-num">8<span>+</span></div>
+        <div class="stat-label">Technologies mastered</div>
+      </div>
+      <div class="stat-item" data-reveal data-reveal-delay="2">
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Client satisfaction</div>
+      </div>
+      <div class="stat-item" data-reveal data-reveal-delay="3">
+        <div class="stat-num">5<span>yrs</span></div>
+        <div class="stat-label">Professional experience</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{# ═══════════════════ SERVICES PREVIEW ═══════════════════════════════ #}
+<section class="section">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div>
+        <p class="section-tag">What I do</p>
+        <h2>My Services</h2>
+      </div>
+      <a href="{{ url_for('services') }}" class="see-all">See all services →</a>
+    </div>
+
+    <div class="services-grid">
+      <div class="svc-card" data-reveal data-reveal-delay="1">
+        <div class="svc-icon svc-icon--web">🌐</div>
+        <h3 class="svc-title">Web Development</h3>
+        <p class="svc-desc">Full-stack web applications using Flask and Next.js. Fast, secure, and built to scale from day one.</p>
+        <div class="svc-tags">
+          <span class="tag">Flask</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">HTML/CSS/JS</span>
+        </div>
+      </div>
+
+      <div class="svc-card" data-reveal data-reveal-delay="2">
+        <div class="svc-icon svc-icon--mobile">📱</div>
+        <h3 class="svc-title">Mobile Apps</h3>
+        <p class="svc-desc">Beautiful cross-platform mobile apps with Flutter and Dart. One codebase, native performance on iOS and Android.</p>
+        <div class="svc-tags">
+          <span class="tag">Flutter</span>
+          <span class="tag">Dart</span>
+          <span class="tag">iOS &amp; Android</span>
+        </div>
+      </div>
+
+      <div class="svc-card" data-reveal data-reveal-delay="3">
+        <div class="svc-icon svc-icon--api">⚙️</div>
+        <h3 class="svc-title">API &amp; Backend</h3>
+        <p class="svc-desc">Robust RESTful APIs and backend systems using Python, C# and .NET. Clean architecture, well-documented.</p>
+        <div class="svc-tags">
+          <span class="tag">Python</span>
+          <span class="tag">C#</span>
+          <span class="tag">.NET</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{# ═══════════════════ PORTFOLIO PREVIEW (dark bg) ═════════════════════ #}
+<section class="portfolio-dark">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div>
+        <p class="section-tag">Recent work</p>
+        <h2 class="section-title">Featured Projects</h2>
+      </div>
+      <a href="{{ url_for('portfolio') }}" class="see-all">View all →</a>
+    </div>
+
+    <div class="proj-grid">
+      {% if featured_projects %}
+        {% for project in featured_projects %}
+        <div class="proj-card" data-reveal data-reveal-delay="{{ loop.index }}">
+          <span class="proj-lang">{{ project.category }}</span>
+          <h3 class="proj-title">{{ project.title }}</h3>
+          <p class="proj-desc">{{ project.description[:140] }}{% if project.description|length > 140 %}…{% endif %}</p>
+          <div class="proj-footer">
+            <div class="proj-stack">
+              {% for tech in project.stack_list[:4] %}
+              <span>{{ tech }}</span>
+              {% endfor %}
+            </div>
+            {% if project.live_url or project.github_url %}
+            <a href="{{ project.live_url or project.github_url }}" target="_blank" rel="noopener" class="proj-link">
+              View
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            {% else %}
+            <a href="{{ url_for('portfolio') }}" class="proj-link">
+              Details
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+
+        {# pad to 2 cols if only 1 featured project #}
+        {% if featured_projects|length == 1 %}
+        <div class="proj-empty">
+          <span>🚀</span>
+          <p>More projects coming soon.</p>
+          <a href="{{ url_for('portfolio') }}">See all work →</a>
+        </div>
+        {% endif %}
+
+      {% else %}
+        {# No projects yet — show placeholder cards #}
+        <div class="proj-empty">
+          <span>🗂️</span>
+          <p>Projects will appear here once added via the <a href="{{ url_for('admin_dashboard') }}">admin panel</a>.</p>
+        </div>
+        <div class="proj-empty">
+          <span>💡</span>
+          <p>Add your first project and mark it as <strong>featured</strong> to display it here.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+
+{# ═══════════════════ BLOG PREVIEW ════════════════════════════════════ #}
+<section class="section">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div>
+        <p class="section-tag">From the blog</p>
+        <h2>Latest Articles</h2>
+      </div>
+      <a href="{{ url_for('blog') }}" class="see-all">Read all posts →</a>
+    </div>
+
+    <div class="blog-grid">
+      {% if recent_posts %}
+        {% for post in recent_posts %}
+        <article class="blog-card" data-reveal data-reveal-delay="{{ loop.index }}">
+          <div class="blog-card__body">
+            <div class="blog-card__meta">
+              <span class="blog-cat">{{ post.category }}</span>
+              <span class="blog-date">{{ post.created_at.strftime('%b %d, %Y') }}</span>
+            </div>
+            <a href="{{ url_for('blog_post', slug=post.slug) }}">
+              <h3 class="blog-card__title">{{ post.title }}</h3>
+            </a>
+            <p class="blog-card__excerpt">{{ post.excerpt[:110] }}{% if post.excerpt|length > 110 %}…{% endif %}</p>
+          </div>
+          <div class="blog-card__footer">
+            <span>{{ post.read_time }}</span>
+            <a href="{{ url_for('blog_post', slug=post.slug) }}" class="see-all">Read →</a>
+          </div>
+        </article>
+        {% endfor %}
+      {% else %}
+        <div class="blog-empty">
+          <p>No articles yet. <a href="{{ url_for('admin_post_new') }}">Write your first post →</a></p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+
+{# ═══════════════════ CTA BAND ════════════════════════════════════════ #}
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-band__inner" data-reveal>
+      <h2>Got a project in mind?</h2>
+      <p>I'm available for freelance work. Let's build something great together.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Start a Project</a>
+        <a href="{{ url_for('portfolio') }}" class="btn btn-outline-white btn-lg">View My Work</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

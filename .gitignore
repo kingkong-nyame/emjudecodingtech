@@ -1,0 +1,26 @@
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Databases (may contain user data / admin hashes)
+instance/
+*.db
+*.sqlite3
+
+# Dependencies
+node_modules/
+vendor/
+
+# Logs
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db

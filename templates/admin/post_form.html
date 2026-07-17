@@ -1,0 +1,283 @@
+{% extends 'admin/base.html' %}
+{% block title %}{{ 'Edit Post' if post else 'New Post' }}{% endblock %}
+
+{% block admin_head %}
+<style>
+/* Simple toolbar for the body textarea */
+.editor-toolbar {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  padding: 10px 12px; background: var(--bg-2);
+  border: 1.5px solid var(--border); border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.editor-toolbar button {
+  padding: 4px 10px; border-radius: 5px;
+  border: 1px solid var(--border); background: var(--bg);
+  font-size: 12px; font-weight: 600; font-family: 'DM Mono', monospace;
+  color: var(--text-muted); cursor: pointer; transition: all .15s;
+}
+.editor-toolbar button:hover { background: var(--sky-light); color: var(--sky-dark); border-color: var(--sky-mid); }
+
+.editor-toolbar__sep {
+  width: 1px; background: var(--border); margin: 2px 4px; align-self: stretch;
+}
+
+#body {
+  border-radius: 0 0 var(--radius) var(--radius) !important;
+  font-family: 'DM Mono', monospace !important;
+  font-size: 13px !important;
+  min-height: 320px;
+  line-height: 1.7;
+}
+
+.char-count { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+
+.preview-toggle {
+  display: flex; gap: 0;
+  background: var(--bg-2); border: 1.5px solid var(--border);
+  border-radius: 8px; overflow: hidden; margin-bottom: 8px;
+}
+.preview-tab {
+  padding: 6px 16px; font-size: 12px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-muted); transition: all .15s;
+}
+.preview-tab.active { background: var(--sky-dark); color: #fff; }
+
+#preview-pane {
+  display: none;
+  min-height: 320px; padding: 16px;
+  border: 1.5px solid var(--border); border-radius: var(--radius);
+  background: var(--bg-2);
+  font-size: 14px; line-height: 1.8; color: var(--text-2);
+}
+#preview-pane h2 { font-size: 1.3rem; font-family: 'Syne', sans-serif; font-weight: 800; margin: 1.2em 0 .5em; color: var(--text); }
+#preview-pane h3 { font-size: 1.1rem; font-family: 'Syne', sans-serif; font-weight: 700; margin: 1em 0 .4em; color: var(--text); }
+#preview-pane p  { margin-bottom: 1em; }
+#preview-pane code { font-family: 'DM Mono', monospace; font-size: .85em; background: var(--bg-3); padding: 1px 5px; border-radius: 4px; color: var(--sky-dark); }
+#preview-pane pre { background: #0d1117; border-radius: 8px; padding: 16px; overflow-x: auto; margin: 1em 0; }
+#preview-pane pre code { background: none; color: #e6edf3; }
+#preview-pane blockquote { border-left: 3px solid var(--sky-dark); padding: 8px 16px; margin: 1em 0; background: var(--sky-light); border-radius: 0 8px 8px 0; font-style: italic; }
+#preview-pane ul, #preview-pane ol { padding-left: 1.5em; margin-bottom: 1em; }
+#preview-pane li { margin-bottom: .4em; }
+#preview-pane ul li::marker { color: var(--sky-dark); }
+[data-theme="dark"] #preview-pane blockquote { background: rgba(56,189,248,.06); }
+</style>
+{% endblock %}
+
+{% block admin_content %}
+
+<div class="admin-page-header">
+  <div>
+    <h1 class="admin-page-title">{{ 'Edit Post' if post else 'New Post' }}</h1>
+    <p class="admin-page-sub">
+      {% if post %}Editing "{{ post.title }}"{% else %}Write a new article for your blog{% endif %}
+    </p>
+  </div>
+  <a href="{{ url_for('admin_posts') }}" class="tbl-btn">← Back to Posts</a>
+</div>
+
+<form method="POST"
+      action="{{ url_for('admin_post_edit', post_id=post.id) if post else url_for('admin_post_new') }}">
+
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;">
+
+    {# ── Main column ── #}
+    <div>
+
+      {# Title #}
+      <div class="admin-form-card" style="margin-bottom:20px;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="title" style="font-size:14px;font-weight:700;">Post Title</label>
+          <input
+            type="text" id="title" name="title"
+            placeholder="e.g. How to build a REST API with Flask"
+            value="{{ post.title if post else form.get('title','') }}"
+            required autofocus
+            style="font-size:18px;font-weight:600;padding:12px 16px;"
+          />
+        </div>
+      </div>
+
+      {# Excerpt #}
+      <div class="admin-form-card" style="margin-bottom:20px;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="excerpt">
+            Excerpt
+            <span style="font-weight:400;color:var(--text-muted);font-size:12px;margin-left:6px;">Shown on blog list and search results</span>
+          </label>
+          <textarea id="excerpt" name="excerpt" rows="3"
+                    placeholder="A short, compelling summary of what this article is about…"
+                    required>{{ post.excerpt if post else form.get('excerpt','') }}</textarea>
+          <div class="char-count"><span id="excerpt-count">0</span> / 400 characters</div>
+        </div>
+      </div>
+
+      {# Body #}
+      <div class="admin-form-card">
+        <label style="font-size:13px;font-weight:700;display:block;margin-bottom:10px;">
+          Article Body
+          <span style="font-weight:400;color:var(--text-muted);font-size:12px;margin-left:6px;">HTML is supported</span>
+        </label>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <div class="preview-toggle">
+            <button type="button" class="preview-tab active" id="tab-write" onclick="switchTab('write')">Write</button>
+            <button type="button" class="preview-tab" id="tab-preview" onclick="switchTab('preview')">Preview</button>
+          </div>
+          <div class="char-count"><span id="body-count">0</span> words</div>
+        </div>
+
+        <div class="editor-toolbar">
+          <button type="button" onclick="wrap('<h2>','</h2>')"><b>H2</b></button>
+          <button type="button" onclick="wrap('<h3>','</h3>')"><b>H3</b></button>
+          <div class="editor-toolbar__sep"></div>
+          <button type="button" onclick="wrap('<strong>','</strong>')"><b>B</b></button>
+          <button type="button" onclick="wrap('<em>','</em>')"><i>I</i></button>
+          <div class="editor-toolbar__sep"></div>
+          <button type="button" onclick="wrap('<a href=\'\'>', '</a>')">Link</button>
+          <button type="button" onclick="insertBlock('<ul>\n  <li></li>\n</ul>')">List</button>
+          <button type="button" onclick="insertBlock('<blockquote></blockquote>')">Quote</button>
+          <div class="editor-toolbar__sep"></div>
+          <button type="button" onclick="insertBlock('<pre><code>\n\n</code></pre>')">Code</button>
+          <button type="button" onclick="wrap('<code>','</code>')">Inline</button>
+          <div class="editor-toolbar__sep"></div>
+          <button type="button" onclick="insertBlock('<hr>')">HR</button>
+          <button type="button" onclick="insertBlock('<p></p>')">P</button>
+        </div>
+
+        <textarea id="body" name="body" required
+                  placeholder="Write your article here. HTML is supported — use <h2> for headings, <p> for paragraphs, <strong> for bold, <em> for italic, <code> for inline code, <pre><code> for code blocks.">{{ post.body if post else form.get('body','') }}</textarea>
+
+        <div id="preview-pane"></div>
+      </div>
+
+    </div>
+
+    {# ── Sidebar options ── #}
+    <div style="display:flex;flex-direction:column;gap:16px;position:sticky;top:80px;">
+
+      {# Publish settings #}
+      <div class="admin-form-card">
+        <div class="admin-form-section__title">Publish</div>
+
+        <div class="form-group">
+          <label class="form-check" style="cursor:pointer;">
+            <input type="checkbox" name="published" value="1"
+              {% if post and post.published %}checked{% endif %}
+              {% if not post and form.get('published') %}checked{% endif %} />
+            Publish immediately
+          </label>
+          <p class="field-hint">Uncheck to save as a draft.</p>
+        </div>
+
+        <div class="admin-form-actions" style="border:none;padding:0;margin:0;flex-direction:column;align-items:stretch;gap:8px;">
+          <button type="submit" class="btn btn-primary" style="justify-content:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            {{ 'Save Changes' if post else 'Create Post' }}
+          </button>
+          <a href="{{ url_for('admin_posts') }}" class="btn btn-secondary" style="justify-content:center;">Cancel</a>
+        </div>
+      </div>
+
+      {# Category & Tags #}
+      <div class="admin-form-card">
+        <div class="admin-form-section__title" style="margin-bottom:16px;">Category &amp; Tags</div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category">
+            {% set cats = ['Flask', 'Flutter', 'Python', 'Next.js', 'C# / .NET', 'Mobile', 'Web Dev', 'Tutorial', 'Tips', 'General'] %}
+            {% for cat in cats %}
+            <option value="{{ cat }}"
+              {% if post and post.category == cat %}selected
+              {% elif form.get('category') == cat %}selected{% endif %}>
+              {{ cat }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="tags">Tags</label>
+          <input type="text" id="tags" name="tags"
+                 placeholder="flask, api, python, beginner"
+                 value="{{ post.tags if post else form.get('tags','') }}" />
+          <p class="field-hint">Comma-separated. e.g. flask, tutorial, python</p>
+        </div>
+      </div>
+
+      {# Live link (if editing published post) #}
+      {% if post and post.published %}
+      <div class="admin-form-card" style="background:var(--sky-light);border-color:var(--sky-mid);">
+        <div style="font-size:12px;font-weight:700;color:var(--sky-dark);margin-bottom:10px;">Live Post</div>
+        <a href="{{ url_for('blog_post', slug=post.slug) }}" target="_blank"
+           style="font-size:13px;color:var(--sky-dark);display:flex;align-items:center;gap:6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          View on site
+        </a>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+</form>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+/* ── Toolbar helpers ── */
+const bodyTA = document.getElementById('body');
+
+function wrap(open, close) {
+  const start = bodyTA.selectionStart, end = bodyTA.selectionEnd;
+  const sel = bodyTA.value.slice(start, end) || 'text here';
+  bodyTA.setRangeText(open + sel + close, start, end, 'end');
+  bodyTA.focus(); updateCounts();
+}
+function insertBlock(html) {
+  const pos = bodyTA.selectionStart;
+  bodyTA.setRangeText('\n' + html + '\n', pos, pos, 'end');
+  bodyTA.focus(); updateCounts();
+}
+
+/* ── Preview / write tabs ── */
+function switchTab(tab) {
+  const writeTab   = document.getElementById('tab-write');
+  const previewTab = document.getElementById('tab-preview');
+  const preview    = document.getElementById('preview-pane');
+
+  if (tab === 'preview') {
+    bodyTA.style.display   = 'none';
+    preview.style.display  = 'block';
+    preview.innerHTML      = bodyTA.value || '<em style="color:var(--text-muted)">Nothing to preview yet.</em>';
+    writeTab.classList.remove('active');
+    previewTab.classList.add('active');
+  } else {
+    bodyTA.style.display   = 'block';
+    preview.style.display  = 'none';
+    writeTab.classList.add('active');
+    previewTab.classList.remove('active');
+    bodyTA.focus();
+  }
+}
+
+/* ── Character / word counts ── */
+function updateCounts() {
+  const excerptEl = document.getElementById('excerpt');
+  const excerptCount = document.getElementById('excerpt-count');
+  const bodyCount    = document.getElementById('body-count');
+  if (excerptEl && excerptCount) excerptCount.textContent = excerptEl.value.length;
+  if (bodyTA && bodyCount) {
+    const words = bodyTA.value.trim().split(/\s+/).filter(Boolean).length;
+    bodyCount.textContent = words;
+  }
+}
+document.getElementById('excerpt')?.addEventListener('input', updateCounts);
+bodyTA?.addEventListener('input', updateCounts);
+updateCounts();
+</script>
+{% endblock %}

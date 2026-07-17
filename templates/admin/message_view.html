@@ -1,0 +1,90 @@
+{% extends 'admin/base.html' %}
+{% block title %}Message from {{ msg.name }}{% endblock %}
+
+{% block admin_content %}
+
+<div class="admin-page-header">
+  <div>
+    <h1 class="admin-page-title">Message from {{ msg.name }}</h1>
+    <p class="admin-page-sub">Received {{ msg.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+  </div>
+  <a href="{{ url_for('admin_messages') }}" class="tbl-btn">← Back to Messages</a>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:start;">
+
+  {# Message body #}
+  <div class="admin-form-card">
+    <div style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);">
+      <div style="font-size:22px;font-weight:800;font-family:'Syne',sans-serif;letter-spacing:-.03em;color:var(--text);margin-bottom:4px;">
+        {{ msg.subject }}
+      </div>
+      <div style="font-size:13px;color:var(--text-muted);">
+        From <strong style="color:var(--text);">{{ msg.name }}</strong>
+        &lt;<a href="mailto:{{ msg.email }}" style="color:var(--sky-dark);">{{ msg.email }}</a>&gt;
+      </div>
+    </div>
+
+    <div style="font-size:15px;line-height:1.8;color:var(--text-2);white-space:pre-wrap;">{{ msg.body }}</div>
+
+    <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="mailto:{{ msg.email }}?subject=Re: {{ msg.subject }}"
+         class="btn btn-primary btn-sm">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Reply by Email
+      </a>
+      <a href="https://wa.me/{{ msg.email }}" class="tbl-btn">
+        WhatsApp
+      </a>
+      <form method="POST" action="{{ url_for('admin_message_delete', msg_id=msg.id) }}"
+            data-confirm="Delete this message? Cannot be undone." style="margin-left:auto;">
+        <button type="submit" class="tbl-btn tbl-btn--danger">Delete Message</button>
+      </form>
+    </div>
+  </div>
+
+  {# Sender info #}
+  <div style="display:flex;flex-direction:column;gap:16px;">
+
+    <div class="admin-form-card">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);">
+        Sender Details
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Name</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);">{{ msg.name }}</div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Email</div>
+          <a href="mailto:{{ msg.email }}" style="font-size:14px;color:var(--sky-dark);font-weight:500;">{{ msg.email }}</a>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Received</div>
+          <div style="font-size:13px;color:var(--text-2);">{{ msg.created_at.strftime('%B %d, %Y') }}</div>
+          <div style="font-size:12px;color:var(--text-muted);">{{ msg.created_at.strftime('%I:%M %p') }}</div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Status</div>
+          <span class="badge badge--read">Read</span>
+        </div>
+      </div>
+    </div>
+
+    {# Quick reply card #}
+    <div class="admin-form-card" style="background:var(--sky-light);border-color:var(--sky-mid);">
+      <div style="font-size:12px;font-weight:700;color:var(--sky-dark);margin-bottom:10px;">Quick Reply</div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;line-height:1.6;">
+        Click the button below to open your email client with a pre-filled reply.
+      </p>
+      <a href="mailto:{{ msg.email }}?subject=Re: {{ msg.subject }}"
+         class="btn btn-primary btn-sm" style="width:100%;justify-content:center;">
+        Open Email Reply
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

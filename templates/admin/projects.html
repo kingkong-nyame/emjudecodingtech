@@ -1,0 +1,92 @@
+{% extends 'admin/base.html' %}
+{% block title %}Projects{% endblock %}
+
+{% block admin_content %}
+
+<div class="admin-page-header">
+  <div>
+    <h1 class="admin-page-title">Projects</h1>
+    <p class="admin-page-sub">{{ projects|length }} project{{ 's' if projects|length != 1 }} in your portfolio</p>
+  </div>
+  <a href="{{ url_for('admin_project_new') }}" class="btn btn-primary btn-sm">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add Project
+  </a>
+</div>
+
+{% if projects %}
+<div class="table-card">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Category</th>
+        <th>Tech Stack</th>
+        <th>Featured</th>
+        <th>Order</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+      <tr>
+        <td>
+          <div style="font-weight:600;color:var(--text);">{{ project.title }}</div>
+          {% if project.live_url %}
+          <a href="{{ project.live_url }}" target="_blank"
+             style="font-size:11px;color:var(--sky-dark);">
+            {{ project.live_url | replace('https://', '') | replace('http://', '') | truncate(35) }} ↗
+          </a>
+          {% endif %}
+        </td>
+        <td>{{ project.category }}</td>
+        <td>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            {% for tech in project.stack_list[:3] %}
+            <span class="badge badge--draft">{{ tech }}</span>
+            {% endfor %}
+            {% if project.stack_list|length > 3 %}
+            <span style="font-size:11px;color:var(--text-muted);">+{{ project.stack_list|length - 3 }}</span>
+            {% endif %}
+          </div>
+        </td>
+        <td>
+          {% if project.featured %}
+          <span class="badge badge--featured">⭐ Featured</span>
+          {% else %}
+          <span style="color:var(--text-muted);font-size:13px;">—</span>
+          {% endif %}
+        </td>
+        <td style="color:var(--text-muted);">{{ project.order }}</td>
+        <td>
+          <div class="tbl-actions">
+            {% if project.live_url %}
+            <a href="{{ project.live_url }}" target="_blank" class="tbl-btn" title="View live">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            {% endif %}
+            <a href="{{ url_for('admin_project_edit', proj_id=project.id) }}" class="tbl-btn">Edit</a>
+            <form method="POST" action="{{ url_for('admin_project_delete', proj_id=project.id) }}"
+                  data-confirm="Delete '{{ project.title }}'? Cannot be undone." style="display:inline;">
+              <button type="submit" class="tbl-btn tbl-btn--danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+<div class="table-card">
+  <div class="empty-state">
+    <div class="empty-state__icon">🚀</div>
+    <h3>No projects yet</h3>
+    <p>Add your first project to display it on the portfolio page.</p>
+    <a href="{{ url_for('admin_project_new') }}" class="btn btn-primary">Add First Project</a>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

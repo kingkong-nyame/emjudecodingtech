@@ -1,0 +1,782 @@
+{% extends 'base.html' %}
+
+{% block title %}Services{% endblock %}
+{% block meta_description %}Software development services by EmjudeCodingTech — web apps, mobile apps, APIs, and more. Flask, Flutter, Next.js, C# and Python.{% endblock %}
+
+{% block extra_head %}
+<style>
+
+/* ── Page hero ─────────────────────────────────────────────────────── */
+.page-hero {
+  padding: 72px 0 64px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: .5;
+  pointer-events: none;
+}
+.page-hero__inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+.page-hero__eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--sky-dark); margin-bottom: 14px;
+}
+.page-hero h1 { margin-bottom: 16px; }
+.page-hero__sub {
+  font-size: 17px; color: var(--text-muted);
+  line-height: 1.7; margin-bottom: 32px;
+}
+
+/* ── Main services grid ────────────────────────────────────────────── */
+.services-main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 80px;
+}
+
+.svc-main-card {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  transition: all .25s;
+  position: relative;
+  overflow: hidden;
+}
+.svc-main-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sky-dark), var(--sky-mid));
+  opacity: 0;
+  transition: opacity .25s;
+}
+.svc-main-card:hover {
+  border-color: var(--sky-mid);
+  box-shadow: var(--shadow-sky);
+  transform: translateY(-4px);
+}
+.svc-main-card:hover::before { opacity: 1; }
+
+.svc-main-card.featured {
+  border-color: var(--sky-dark);
+  background: var(--sky-light);
+}
+[data-theme="dark"] .svc-main-card.featured {
+  background: rgba(56,189,248,.06);
+  border-color: rgba(56,189,248,.4);
+}
+.svc-main-card.featured::before { opacity: 1; }
+
+.svc-featured-badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .6px; text-transform: uppercase;
+  background: var(--sky-dark); color: #fff;
+  padding: 3px 10px; border-radius: 99px;
+  margin-bottom: 16px;
+}
+
+.svc-card-icon {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  margin-bottom: 20px;
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
+}
+.svc-main-card.featured .svc-card-icon { background: #fff; }
+
+.svc-card-title { font-size: 20px; margin-bottom: 10px; }
+.svc-card-desc  { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
+
+.svc-deliverables { margin-bottom: 24px; }
+.svc-deliverables__title {
+  font-size: 11px; font-weight: 700; letter-spacing: .8px;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;
+}
+.svc-deliverable-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--text-2);
+  padding: 5px 0;
+}
+.svc-deliverable-item::before {
+  content: '✓';
+  color: var(--sky-dark);
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.svc-card-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 28px; }
+
+.svc-card-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--sky-dark);
+  transition: gap .2s;
+}
+.svc-card-cta:hover { gap: 10px; }
+
+/* ── Process section ───────────────────────────────────────────────── */
+.process-section {
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 48px;
+  position: relative;
+}
+.process-steps::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: calc(12.5% + 28px);
+  right: calc(12.5% + 28px);
+  height: 1.5px;
+  background: var(--border);
+  z-index: 0;
+}
+.process-step {
+  text-align: center;
+  padding: 0 16px;
+  position: relative;
+  z-index: 1;
+}
+.process-step__num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 18px; font-weight: 800;
+  color: var(--text-muted);
+  margin: 0 auto 20px;
+  transition: all .25s;
+}
+.process-step:hover .process-step__num {
+  border-color: var(--sky-dark);
+  color: var(--sky-dark);
+  background: var(--sky-light);
+}
+[data-theme="dark"] .process-step:hover .process-step__num {
+  background: rgba(56,189,248,.1);
+}
+.process-step__title {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px; font-weight: 700;
+  margin-bottom: 8px; color: var(--text);
+}
+.process-step__desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+/* ── Add-ons / extras ──────────────────────────────────────────────── */
+.addons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.addon-card {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex; gap: 16px; align-items: flex-start;
+  transition: all .25s;
+}
+.addon-card:hover {
+  border-color: var(--sky-mid);
+  box-shadow: var(--shadow-sky);
+  transform: translateY(-2px);
+}
+.addon-icon {
+  font-size: 24px; flex-shrink: 0;
+  width: 44px; height: 44px;
+  background: var(--bg-2); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.addon-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.addon-desc  { font-size: 12px; color: var(--text-muted); line-height: 1.55; }
+
+/* ── Pricing ──────────────────────────────────────────────────────── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.pricing-card {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all .25s;
+}
+.pricing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-sky); }
+
+.pricing-card.popular {
+  border-color: var(--sky-dark);
+  transform: scale(1.02);
+  box-shadow: var(--shadow-sky);
+}
+.pricing-card.popular:hover { transform: scale(1.02) translateY(-4px); }
+
+.pricing-card__header {
+  padding: 28px 28px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.pricing-popular-badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .6px; text-transform: uppercase;
+  background: var(--sky-dark); color: #fff;
+  padding: 3px 10px; border-radius: 99px; margin-bottom: 12px;
+}
+.pricing-tier { font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 8px; }
+.pricing-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 36px; font-weight: 800;
+  color: var(--text); letter-spacing: -2px; line-height: 1;
+  margin-bottom: 6px;
+}
+.pricing-price span { font-size: 15px; font-weight: 400; color: var(--text-muted); letter-spacing: 0; }
+.pricing-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+.pricing-card__body { padding: 24px 28px; }
+.pricing-feature {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--text-2);
+  padding: 5px 0;
+}
+.pricing-feature .check { color: var(--sky-dark); font-weight: 700; flex-shrink: 0; }
+.pricing-feature .cross { color: var(--text-muted); flex-shrink: 0; }
+
+.pricing-card__footer { padding: 4px 28px 28px; }
+
+/* ── FAQ ──────────────────────────────────────────────────────────── */
+.faq-list { max-width: 720px; margin: 0 auto; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-question {
+  width: 100%; background: none; border: none;
+  text-align: left; padding: 20px 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 600; color: var(--text);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  cursor: pointer; transition: color .2s;
+}
+.faq-question:hover { color: var(--sky-dark); }
+.faq-chevron {
+  flex-shrink: 0; transition: transform .3s;
+  color: var(--text-muted);
+}
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer {
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s ease, padding .35s ease;
+  font-size: 14px; color: var(--text-muted); line-height: 1.75;
+}
+.faq-item.open .faq-answer { max-height: 300px; padding-bottom: 20px; }
+
+/* ── CTA band ─────────────────────────────────────────────────────── */
+.cta-band {
+  background: var(--sky-dark); padding: 72px 0;
+  position: relative; overflow: hidden; text-align: center;
+}
+.cta-band::before {
+  content: ''; position: absolute;
+  right: -100px; top: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: rgba(255,255,255,.06); pointer-events: none;
+}
+.cta-band::after {
+  content: ''; position: absolute;
+  left: -60px; bottom: -80px;
+  width: 260px; height: 260px; border-radius: 50%;
+  background: rgba(255,255,255,.04); pointer-events: none;
+}
+.cta-band__inner { position: relative; z-index: 1; }
+.cta-band h2 { color: #fff; margin-bottom: 12px; }
+.cta-band p  { color: rgba(255,255,255,.75); font-size: 16px; margin-bottom: 32px; }
+.btn-white { background: #fff; color: var(--sky-dark); border: none; font-weight: 700; }
+.btn-white:hover { background: var(--sky-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+.btn-outline-white { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.5); font-weight: 600; }
+.btn-outline-white:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+
+/* ── Reveal ───────────────────────────────────────────────────────── */
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .55s ease, transform .55s ease; }
+[data-reveal].revealed { opacity: 1; transform: none; }
+[data-reveal-delay="1"] { transition-delay: .1s; }
+[data-reveal-delay="2"] { transition-delay: .2s; }
+[data-reveal-delay="3"] { transition-delay: .3s; }
+[data-reveal-delay="4"] { transition-delay: .4s; }
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .services-main  { grid-template-columns: 1fr; }
+  .process-steps  { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .process-steps::before { display: none; }
+  .addons-grid    { grid-template-columns: 1fr; }
+  .pricing-grid   { grid-template-columns: 1fr; }
+  .pricing-card.popular { transform: none; }
+}
+@media (max-width: 600px) {
+  .process-steps  { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+{# ════════════════ PAGE HERO ══════════════════════════════════════════ #}
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <p class="page-hero__eyebrow">What I offer</p>
+      <h1>Services That<br><span class="highlight">Deliver Results</span></h1>
+      <p class="page-hero__sub">
+        From idea to deployment — I build web apps, mobile apps and APIs
+        that are fast, clean and built to last.
+      </p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="{{ url_for('contact') }}"   class="btn btn-primary">Start a Project</a>
+        <a href="{{ url_for('portfolio') }}" class="btn btn-secondary">See Past Work</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{# ════════════════ MAIN SERVICES ══════════════════════════════════════ #}
+<section class="section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;" data-reveal>
+      <p class="section-tag">Core services</p>
+      <h2>What I Build</h2>
+    </div>
+
+    <div class="services-main">
+
+      {# Web Development #}
+      <div class="svc-main-card featured" data-reveal data-reveal-delay="1">
+        <span class="svc-featured-badge">Most Popular</span>
+        <div class="svc-card-icon">🌐</div>
+        <h3 class="svc-card-title">Web Development</h3>
+        <p class="svc-card-desc">
+          Full-stack web applications using Flask on the backend and modern HTML/CSS/JS
+          or Next.js on the frontend. Designed to be fast, secure and scalable.
+        </p>
+        <div class="svc-deliverables">
+          <div class="svc-deliverables__title">What you get</div>
+          <div class="svc-deliverable-item">Responsive, mobile-first design</div>
+          <div class="svc-deliverable-item">Flask backend with SQLite / PostgreSQL</div>
+          <div class="svc-deliverable-item">Admin panel for content management</div>
+          <div class="svc-deliverable-item">User authentication &amp; roles</div>
+          <div class="svc-deliverable-item">Deployment-ready (Railway, Render, VPS)</div>
+        </div>
+        <div class="svc-card-tags">
+          <span class="tag">Flask</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">Python</span>
+          <span class="tag">HTML/CSS/JS</span>
+          <span class="tag">SQLite</span>
+        </div>
+        <a href="{{ url_for('contact') }}" class="svc-card-cta">
+          Request this service →
+        </a>
+      </div>
+
+      {# Mobile Apps #}
+      <div class="svc-main-card" data-reveal data-reveal-delay="2">
+        <div class="svc-card-icon">📱</div>
+        <h3 class="svc-card-title">Mobile App Development</h3>
+        <p class="svc-card-desc">
+          Beautiful, performant cross-platform mobile apps with Flutter and Dart.
+          One codebase that runs natively on both iOS and Android.
+        </p>
+        <div class="svc-deliverables">
+          <div class="svc-deliverables__title">What you get</div>
+          <div class="svc-deliverable-item">iOS &amp; Android from one codebase</div>
+          <div class="svc-deliverable-item">Native-feeling animations &amp; transitions</div>
+          <div class="svc-deliverable-item">Firebase or custom API integration</div>
+          <div class="svc-deliverable-item">Push notifications &amp; offline support</div>
+          <div class="svc-deliverable-item">Play Store / App Store submission help</div>
+        </div>
+        <div class="svc-card-tags">
+          <span class="tag">Flutter</span>
+          <span class="tag">Dart</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">iOS</span>
+          <span class="tag">Android</span>
+        </div>
+        <a href="{{ url_for('contact') }}" class="svc-card-cta">
+          Request this service →
+        </a>
+      </div>
+
+      {# API Development #}
+      <div class="svc-main-card" data-reveal data-reveal-delay="1">
+        <div class="svc-card-icon">⚙️</div>
+        <h3 class="svc-card-title">API &amp; Backend Development</h3>
+        <p class="svc-card-desc">
+          Robust, well-documented RESTful APIs built with Python or C# / .NET.
+          Clean architecture, proper error handling, and easy to integrate.
+        </p>
+        <div class="svc-deliverables">
+          <div class="svc-deliverables__title">What you get</div>
+          <div class="svc-deliverable-item">RESTful API design &amp; documentation</div>
+          <div class="svc-deliverable-item">Authentication (JWT / session-based)</div>
+          <div class="svc-deliverable-item">Database design &amp; migrations</div>
+          <div class="svc-deliverable-item">Third-party integrations (payments, SMS)</div>
+          <div class="svc-deliverable-item">Performance testing &amp; optimisation</div>
+        </div>
+        <div class="svc-card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Flask</span>
+          <span class="tag">C#</span>
+          <span class="tag">.NET</span>
+          <span class="tag">REST</span>
+        </div>
+        <a href="{{ url_for('contact') }}" class="svc-card-cta">
+          Request this service →
+        </a>
+      </div>
+
+      {# Consulting #}
+      <div class="svc-main-card" data-reveal data-reveal-delay="2">
+        <div class="svc-card-icon">💡</div>
+        <h3 class="svc-card-title">Technical Consulting</h3>
+        <p class="svc-card-desc">
+          Need advice on architecture, tech stack, or getting a project unstuck?
+          I offer consulting sessions to help you make the right technical decisions.
+        </p>
+        <div class="svc-deliverables">
+          <div class="svc-deliverables__title">What you get</div>
+          <div class="svc-deliverable-item">Tech stack recommendations</div>
+          <div class="svc-deliverable-item">Code review &amp; architecture audit</div>
+          <div class="svc-deliverable-item">Project planning &amp; scoping</div>
+          <div class="svc-deliverable-item">1-on-1 video or chat sessions</div>
+          <div class="svc-deliverable-item">Written summary &amp; action points</div>
+        </div>
+        <div class="svc-card-tags">
+          <span class="tag">Architecture</span>
+          <span class="tag">Code Review</span>
+          <span class="tag">Planning</span>
+        </div>
+        <a href="{{ url_for('contact') }}" class="svc-card-cta">
+          Book a session →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+{# ════════════════ MY PROCESS ════════════════════════════════════════ #}
+<section class="section process-section">
+  <div class="container">
+    <div style="text-align:center;" data-reveal>
+      <p class="section-tag">How I work</p>
+      <h2>My Process</h2>
+      <p style="color:var(--text-muted);margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto;">
+        A clear, collaborative process so you always know what's happening with your project.
+      </p>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step" data-reveal data-reveal-delay="1">
+        <div class="process-step__num">01</div>
+        <div class="process-step__title">Discovery</div>
+        <div class="process-step__desc">
+          We talk through your goals, requirements and timeline. I ask the right questions
+          so nothing gets missed.
+        </div>
+      </div>
+      <div class="process-step" data-reveal data-reveal-delay="2">
+        <div class="process-step__num">02</div>
+        <div class="process-step__title">Planning</div>
+        <div class="process-step__desc">
+          I break the project into clear milestones, agree on the tech stack,
+          and send you a detailed proposal.
+        </div>
+      </div>
+      <div class="process-step" data-reveal data-reveal-delay="3">
+        <div class="process-step__num">03</div>
+        <div class="process-step__title">Building</div>
+        <div class="process-step__desc">
+          I build iteratively with regular updates. You get to review progress
+          at every milestone and give feedback.
+        </div>
+      </div>
+      <div class="process-step" data-reveal data-reveal-delay="4">
+        <div class="process-step__num">04</div>
+        <div class="process-step__title">Delivery</div>
+        <div class="process-step__desc">
+          Clean handover with documentation, source code, and deployment support.
+          I'm available for follow-up questions.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{# ════════════════ ADD-ONS ════════════════════════════════════════════ #}
+<section class="section">
+  <div class="container">
+    <div style="margin-bottom:40px;" data-reveal>
+      <p class="section-tag">Extras</p>
+      <h2>Add-On Services</h2>
+    </div>
+
+    <div class="addons-grid">
+      <div class="addon-card" data-reveal data-reveal-delay="1">
+        <div class="addon-icon">🔒</div>
+        <div>
+          <div class="addon-title">Security Hardening</div>
+          <div class="addon-desc">Input validation, CSRF protection, secure headers, rate limiting and basic penetration testing.</div>
+        </div>
+      </div>
+      <div class="addon-card" data-reveal data-reveal-delay="2">
+        <div class="addon-icon">🚀</div>
+        <div>
+          <div class="addon-title">Deployment &amp; Hosting</div>
+          <div class="addon-desc">Set up CI/CD, deploy to Railway, Render, Heroku or a VPS. Domain, SSL and environment config included.</div>
+        </div>
+      </div>
+      <div class="addon-card" data-reveal data-reveal-delay="3">
+        <div class="addon-icon">🔍</div>
+        <div>
+          <div class="addon-title">SEO Optimisation</div>
+          <div class="addon-desc">Meta tags, Open Graph, structured data, sitemap.xml and performance improvements for better rankings.</div>
+        </div>
+      </div>
+      <div class="addon-card" data-reveal data-reveal-delay="1">
+        <div class="addon-icon">📊</div>
+        <div>
+          <div class="addon-title">Analytics Integration</div>
+          <div class="addon-desc">Google Analytics or Plausible setup with custom event tracking, conversion goals and dashboards.</div>
+        </div>
+      </div>
+      <div class="addon-card" data-reveal data-reveal-delay="2">
+        <div class="addon-icon">🛠️</div>
+        <div>
+          <div class="addon-title">Ongoing Maintenance</div>
+          <div class="addon-desc">Monthly retainer for bug fixes, dependency updates, feature additions and priority support.</div>
+        </div>
+      </div>
+      <div class="addon-card" data-reveal data-reveal-delay="3">
+        <div class="addon-icon">📚</div>
+        <div>
+          <div class="addon-title">Training &amp; Handover</div>
+          <div class="addon-desc">Walkthrough sessions, written documentation, and admin panel training so you can manage your own site.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{# ════════════════ PRICING ════════════════════════════════════════════ #}
+<section class="section" style="background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;" data-reveal>
+      <p class="section-tag">Pricing</p>
+      <h2>Simple, Transparent Pricing</h2>
+      <p style="color:var(--text-muted);margin-top:12px;max-width:480px;margin-left:auto;margin-right:auto;">
+        Starting prices for common project types. Every project is different —
+        <a href="{{ url_for('contact') }}" style="color:var(--sky-dark);font-weight:500;">contact me</a>
+        for a custom quote.
+      </p>
+    </div>
+
+    <div class="pricing-grid">
+
+      {# Starter #}
+      <div class="pricing-card" data-reveal data-reveal-delay="1">
+        <div class="pricing-card__header">
+          <div class="pricing-tier">Starter</div>
+          <div class="pricing-price">$200 <span>/ project</span></div>
+          <div class="pricing-desc">Perfect for simple sites, landing pages, or small tools.</div>
+        </div>
+        <div class="pricing-card__body">
+          <div class="pricing-feature"><span class="check">✓</span> Up to 5 pages</div>
+          <div class="pricing-feature"><span class="check">✓</span> Responsive design</div>
+          <div class="pricing-feature"><span class="check">✓</span> Contact form</div>
+          <div class="pricing-feature"><span class="check">✓</span> Basic SEO setup</div>
+          <div class="pricing-feature"><span class="cross">–</span> Admin panel</div>
+          <div class="pricing-feature"><span class="cross">–</span> Database / user auth</div>
+          <div class="pricing-feature"><span class="cross">–</span> API integration</div>
+        </div>
+        <div class="pricing-card__footer">
+          <a href="{{ url_for('contact') }}" class="btn btn-secondary" style="width:100%;justify-content:center;">Get Started</a>
+        </div>
+      </div>
+
+      {# Pro — featured #}
+      <div class="pricing-card popular" data-reveal data-reveal-delay="2">
+        <div class="pricing-card__header">
+          <div class="pricing-popular-badge">Most Popular</div>
+          <div class="pricing-tier">Pro</div>
+          <div class="pricing-price">$500 <span>/ project</span></div>
+          <div class="pricing-desc">Full-featured web app or mobile app with backend and admin.</div>
+        </div>
+        <div class="pricing-card__body">
+          <div class="pricing-feature"><span class="check">✓</span> Unlimited pages</div>
+          <div class="pricing-feature"><span class="check">✓</span> Custom design</div>
+          <div class="pricing-feature"><span class="check">✓</span> Admin panel</div>
+          <div class="pricing-feature"><span class="check">✓</span> Database + user auth</div>
+          <div class="pricing-feature"><span class="check">✓</span> REST API</div>
+          <div class="pricing-feature"><span class="check">✓</span> Deployment support</div>
+          <div class="pricing-feature"><span class="check">✓</span> 30-day support</div>
+        </div>
+        <div class="pricing-card__footer">
+          <a href="{{ url_for('contact') }}" class="btn btn-primary" style="width:100%;justify-content:center;">Get Started</a>
+        </div>
+      </div>
+
+      {# Custom #}
+      <div class="pricing-card" data-reveal data-reveal-delay="3">
+        <div class="pricing-card__header">
+          <div class="pricing-tier">Custom</div>
+          <div class="pricing-price">Let's talk</div>
+          <div class="pricing-desc">For complex platforms, enterprise features or long-term collaboration.</div>
+        </div>
+        <div class="pricing-card__body">
+          <div class="pricing-feature"><span class="check">✓</span> Everything in Pro</div>
+          <div class="pricing-feature"><span class="check">✓</span> Custom integrations</div>
+          <div class="pricing-feature"><span class="check">✓</span> Multi-role permissions</div>
+          <div class="pricing-feature"><span class="check">✓</span> Performance tuning</div>
+          <div class="pricing-feature"><span class="check">✓</span> Dedicated support</div>
+          <div class="pricing-feature"><span class="check">✓</span> Ongoing maintenance</div>
+          <div class="pricing-feature"><span class="check">✓</span> NDA available</div>
+        </div>
+        <div class="pricing-card__footer">
+          <a href="{{ url_for('contact') }}" class="btn btn-secondary" style="width:100%;justify-content:center;">Contact Me</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+{# ════════════════ FAQ ════════════════════════════════════════════════ #}
+<section class="section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;" data-reveal>
+      <p class="section-tag">FAQ</p>
+      <h2>Common Questions</h2>
+    </div>
+
+    <div class="faq-list" data-reveal>
+      <div class="faq-item">
+        <button class="faq-question">
+          How long does a typical project take?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          It depends on the scope. A simple 5-page website typically takes 1–2 weeks.
+          A full-stack web app with admin panel takes 3–6 weeks. A mobile app usually
+          takes 4–8 weeks. I always provide a realistic timeline upfront before starting.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          How do payments work?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          I typically work with a 50% deposit upfront and 50% on delivery.
+          For larger projects I may split into 3 milestone payments.
+          I accept bank transfers, mobile money (MTN, Vodafone), and PayPal.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Do you work with clients outside Ghana?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          Absolutely. I work with clients remotely all over the world. Communication
+          is via WhatsApp, email, or video call — whichever works best for you.
+          Time zone differences are not a problem; I'm flexible with hours.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Will I own the source code?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          Yes — once the project is fully paid for, you own 100% of the source code.
+          I'll hand over the code via GitHub or a ZIP file, along with documentation
+          to help you or another developer maintain it in future.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          What if I need changes after delivery?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          All projects include a 30-day post-delivery support window for bug fixes
+          at no extra charge. Feature additions after delivery are quoted separately.
+          I also offer monthly maintenance retainers for ongoing support.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{# ════════════════ CTA BAND ═══════════════════════════════════════════ #}
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-band__inner" data-reveal>
+      <h2>Ready to start your project?</h2>
+      <p>Tell me what you're building and I'll get back to you within 24 hours.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="{{ url_for('contact') }}" class="btn btn-white btn-lg">Contact Me Now</a>
+        <a href="{{ url_for('portfolio') }}" class="btn btn-outline-white btn-lg">View My Work</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script>
+/* FAQ accordion */
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    /* close all */
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    /* open this one if it wasn't already open */
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+{% endblock %}
