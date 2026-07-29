@@ -1,0 +1,23 @@
+# Keep the deployment bundle small and free of secrets/local state.
+
+.git/
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Local database + logs — production uses Postgres via DATABASE_URL.
+instance/
+*.db
+*.sqlite3
+*.log
+
+# Secrets live in Vercel's environment variables, never in the bundle.
+.env
+.env.*
+
+# Docs and the PythonAnywhere-specific entrypoint aren't needed at runtime.
+DEPLOY.md
+VERCEL.md
+README.md
+wsgi_pythonanywhere.py

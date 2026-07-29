@@ -82,7 +82,8 @@ flask run                       # http://127.0.0.1:5000
 
 The public site is at `/`; the admin panel is at `/admin/login`.
 
-For deploying to a live server, see [`DEPLOY.md`](DEPLOY.md).
+For deploying to a live server, see [`VERCEL.md`](VERCEL.md) (Vercel + Neon
+Postgres) or [`DEPLOY.md`](DEPLOY.md) (PythonAnywhere).
 
 ---
 
