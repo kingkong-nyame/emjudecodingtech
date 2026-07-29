@@ -19,47 +19,58 @@ git commit -m "Add Vercel deployment config"
 git push Emjudecodingtech main
 ```
 
-## 2. Import the project into Vercel
+## 2. Import the project and set the environment variables
+
+The database can only be attached *after* the project exists, so the order is
+import → deploy → attach Neon → redeploy. The first deploy will fail at
+runtime; that is expected and step 3 fixes it.
 
 1. Go to <https://vercel.com/new> and sign in with GitHub.
 2. Import `kingkong-nyame/emjudecodingtech`.
-3. Leave every build setting at its default — `vercel.json` handles the config.
-4. **Don't deploy yet.** Add the database and environment variables first
-   (steps 3 and 4), otherwise the first build will come up with no database.
+3. Leave every build setting at its default — `vercel.json` overrides the
+   auto-detected Flask preset anyway.
+4. Expand **Environment Variables** and click **Import .env**, selecting your
+   local `.env`. It must contain:
 
-## 3. Add the Neon database
+   | Key | Value |
+   |-----|-------|
+   | `SECRET_KEY` | A long random string — generate with `python -c "import secrets; print(secrets.token_hex(32))"` |
+   | `MAIL_SERVER` | `smtp.gmail.com` |
+   | `MAIL_PORT` | `465` |
+   | `MAIL_USERNAME` | Your Gmail address |
+   | `MAIL_PASSWORD` | A 16-character [Gmail App Password](https://myaccount.google.com/apppasswords), spaces removed — not your account password |
+   | `CONTACT_RECEIVER` | Where enquiries should land |
 
-1. In the new project, open the **Storage** tab.
-2. **Create Database → Neon → Postgres**, pick a region near your users, create it.
+   Two traps here. `SECRET_KEY` is not optional: without it the app falls back
+   to a hard-coded development value that is visible in this public repo, and
+   anyone could forge an admin session cookie. And do **not** put `DATABASE_URL`
+   in the imported `.env` — Neon supplies that in the next step, and a manually
+   set value would collide with it.
+
+5. Click **Deploy**. The build should succeed but the site will return 500s,
+   because there is no database yet.
+
+## 3. Attach the Neon database
+
+1. In the project dashboard, open the **Storage** tab.
+2. **Create Database → Neon → Postgres**, pick a region near your users
+   (Frankfurt `eu-central-1` is a good default for West Africa), create it.
 3. Make sure it is connected to this project.
 
 Vercel injects `DATABASE_URL` into the project automatically — you do not need
 to copy it anywhere. Neon hands out a *pooled* connection string
 (`...-pooler...`), which is what a serverless app should use.
 
-## 4. Add the remaining environment variables
+## 4. Redeploy
 
-**Settings → Environment Variables.** Add each for Production, Preview *and*
-Development:
+**Deployments →** latest deployment **→ ⋯ → Redeploy.** A running deployment
+does not pick up new environment variables on its own. From here on, every push
+to `main` deploys automatically.
 
-| Key | Value |
-|-----|-------|
-| `SECRET_KEY` | A long random string — generate with `python -c "import secrets; print(secrets.token_hex(32))"` |
-| `MAIL_SERVER` | `smtp.gmail.com` |
-| `MAIL_PORT` | `465` |
-| `MAIL_USERNAME` | Your Gmail address |
-| `MAIL_PASSWORD` | A 16-character [Gmail App Password](https://myaccount.google.com/apppasswords) — not your account password |
-| `CONTACT_RECEIVER` | Where enquiries should land |
+The site will still 500 at this point — the database exists but has no tables.
+Step 5 is what brings it up.
 
-`SECRET_KEY` matters: without it the app falls back to a hard-coded development
-value, and anyone who reads this repo could forge an admin session cookie.
-
-## 5. Deploy
-
-**Deployments → Redeploy** (or push another commit). Every push to `main`
-deploys automatically from here on.
-
-## 6. Create the tables and your admin user
+## 5. Create the tables and your admin user
 
 The Flask CLI can't run on Vercel, so run it locally against the Neon database —
 it's the same database the deployment uses.
